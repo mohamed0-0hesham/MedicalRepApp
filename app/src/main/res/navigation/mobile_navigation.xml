@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.hesham.medicalRepApp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.hesham.medicalRepApp.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_doctors"
+        android:name="com.hesham.medicalRepApp.ui.doctors.DoctorsFragment"
+        android:label="@string/doctors"
+        tools:layout="@layout/fragment_doctors" >
+        <action
+            android:id="@+id/action_nav_doctors_to_addDoctorFragment"
+            app:destination="@id/addDoctorFragment" />
+        <action
+            android:id="@+id/action_nav_doctors_to_doctorDetailsFragment"
+            app:destination="@id/doctorDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDoctorFragment"
+        android:name="com.hesham.medicalRepApp.ui.doctors.AddDoctorFragment"
+        android:label="Add Doctor"
+        tools:layout="@layout/fragment_add_doctor" >
+        <action
+            android:id="@+id/action_addDoctorFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorDetailsFragment"
+        android:name="com.hesham.medicalRepApp.ui.doctors.DoctorDetailsFragment"
+        android:label="Doctor Profile" >
+        <action
+            android:id="@+id/action_doctorDetailsFragment_to_addDoctorFragment"
+            app:destination="@id/addDoctorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.hesham.medicalRepApp.ui.doctors.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map" />
+
+</navigation>

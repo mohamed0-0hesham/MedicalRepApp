@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Medical Rep App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="create_a_new_account">Create a New Account</string>
+    <string name="are_you_already_have_an_account">Are You Already Have An Account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="the_password_and_the_confirm_are_not_matched">the password and the confirm are not matched</string>
+    <string name="log_out">Log Out</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="_01114886639">01114886639</string>
+    <string name="profile">Profile</string>
+    <string name="doctors">Doctors</string>
+    <string name="city">City</string>
+    <string name="gender">Gender</string>
+    <string name="area">Area</string>
+    <string name="center">Center</string>
+    <string name="Location">Location</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="products">Products</string>
+    <string name="last_visit">Last Visit</string>
+    <string name="notes">Notes</string>
+    <string name="save">Save</string>
+
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="cities">
+        <item>Alexandria</item>
+        <item>Mansoura</item>
+        <item>Domiat</item>
+        <item>Behera</item>
+    </string-array>
+    <string name="title_activity_map">MapActivity</string>
+
+</resources>
