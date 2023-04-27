@@ -1,28 +1,17 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.DoctorAdapter
-import com.hesham.medicalRepApp.adapters.OnItemClickListener
+import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.FragmentDoctorsBinding
-import com.hesham.medicalRepApp.methods.BindingAdapters
 import com.hesham.medicalRepApp.models.DoctorModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 class DoctorsFragment : Fragment(), OnItemClickListener {
 
@@ -43,7 +32,7 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.doctorsRecycler.adapter = myAdapter
-        viewModel.getDoctorModelList()
+        viewModel.getDoctorsList()
         viewModel.doctorList.observe(viewLifecycleOwner) { list ->
             myAdapter.setData(list)
         }

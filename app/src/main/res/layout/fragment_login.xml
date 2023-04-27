@@ -8,16 +8,19 @@
     tools:context=".ui.login.LoginActivity">
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="@string/app_name"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -116,4 +119,30 @@
             android:textColor="@color/colorPrimaryVariant"
             android:textSize="15sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/resendVerificationBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/resend_verification_email"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryVariant"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+    <Button
+        android:id="@+id/forgetPasswordBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/forgot_password"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryVariant"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 </androidx.constraintlayout.widget.ConstraintLayout>

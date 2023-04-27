@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hesham.medicalRepApp.data.DoctorsRepository
+import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.methods.BindingAdapters.Companion.doctorsRef
 import com.hesham.medicalRepApp.models.DoctorModel
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 class DoctorsViewModel : ViewModel() {
 
     private val repository = DoctorsRepository()
-    val doctorList: MutableLiveData<ArrayList<DoctorModel>> = MutableLiveData()
+    val doctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
 
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
 
@@ -30,17 +31,11 @@ class DoctorsViewModel : ViewModel() {
         return repository.getAreasList(city)
     }
 
-    fun getDoctorModelList() {
-        val list = arrayListOf<DoctorModel>()
-        doctorsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (n in snapshot.children) {
-                    val doctor = n.getValue(DoctorModel::class.java)
-                    list.add(0, doctor!!)
-                }
-                doctorList.value = list
+    fun getDoctorsList() {
+        repository.getDoctors(object : DoctorsListener {
+            override fun getDoctorsList(list: List<DoctorModel>) {
+                doctorList.value=list
             }
-            override fun onCancelled(error: DatabaseError) {}
         })
     }
 }

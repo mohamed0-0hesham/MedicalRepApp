@@ -1,20 +1,14 @@
 package com.hesham.medicalRepApp.data
 
-import android.annotation.SuppressLint
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
 class DoctorsRepository {
     private val database = FirebaseDatabase.getInstance()
-    private val doctorsRef = database.getReference("Doctors")
+    private val db = FirebaseFirestore.getInstance()
     private val ref = database.reference
 
     fun getAreasList(city: String): ArrayList<String> {
@@ -29,8 +23,25 @@ class DoctorsRepository {
     }
 
     fun addDoctor(doctor: DoctorModel) {
-        doctor.id = doctorsRef.push().key
-        ref.child("Doctors").child(doctor.id!!).setValue(doctor)
+        db.collection("Doctors")
+            .document()
+            .set(doctor)
+    }
+
+    fun getDoctors(listener: DoctorsListener) {
+        val list: ArrayList<DoctorModel> = arrayListOf()
+        db.collection("Doctors")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (doc in task.result) {
+                        val doctor = doc.toObject(DoctorModel::class.java)
+                        list.add(doctor)
+                    }
+                    DoctorsViewModel().doctorList.value = list
+                    listener.getDoctorsList(list)
+                }
+            }
     }
 
     fun addCity(city: String, area: String) {

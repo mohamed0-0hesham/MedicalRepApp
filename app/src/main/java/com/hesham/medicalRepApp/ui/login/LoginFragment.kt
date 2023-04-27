@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        if (viewModel.user!=null && viewModel.user!!.isEmailVerified){
+        if (viewModel.user!=null){
             startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -59,6 +59,9 @@ class LoginFragment : Fragment() {
         }
         binding.createNewBtn.setOnClickListener {
             replaceFragment(SignUpFragment())
+        }
+        binding.resendVerificationBtn.setOnClickListener {
+            viewModel.sendEmailVerification()
         }
     }
     private fun replaceFragment(fragment: Fragment) {

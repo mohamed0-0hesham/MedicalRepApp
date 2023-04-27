@@ -65,6 +65,7 @@ class AddDoctorFragment : Fragment() {
     }
     private fun onClickButtons(){
         binding.SaveButton.setOnClickListener {
+            checkEmptyFields()
             val doctor=onSave()
             viewModel.addDoctor(doctor)
             viewModel.addCity(doctor.city!!,doctor.area!!)
@@ -81,6 +82,8 @@ class AddDoctorFragment : Fragment() {
             builder.show()
         }
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode==REQUEST_CODE && resultCode == Activity.RESULT_OK){
@@ -123,5 +126,8 @@ class AddDoctorFragment : Fragment() {
             notes = binding.notes.editText!!.text.toString(),
             lastVisit = "15/2/2009"
         )
+    }
+    private fun checkEmptyFields() {
+
     }
 }

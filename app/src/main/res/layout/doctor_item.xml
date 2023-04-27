@@ -12,23 +12,35 @@
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="25dp"
     android:layout_margin="10dp"
+    android:outlineSpotShadowColor="@color/white"
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/nameView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{itemXml.name}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_outline"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@{itemXml.name}"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
         tools:text="Mohamed Ali" />
 
     <TextView
@@ -36,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameView"
-        android:text="@{itemXml.city}"
         android:layout_alignStart="@+id/nameView"
+        android:text="@{itemXml.city}"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="@+id/nameView"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
@@ -48,10 +60,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameView"
-        android:text="@{itemXml.area}"
         android:layout_alignStart="@+id/nameView"
         android:layout_marginStart="8dp"
+        android:text="@{itemXml.area}"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/city"
         app:layout_constraintStart_toEndOf="@+id/city"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
         tools:text="Elmashaya" />
@@ -61,13 +74,13 @@
         android:id="@+id/daysView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:daysBinding="@{itemXml.days}"
         android:layout_below="@+id/nameView"
         android:layout_alignParentEnd="true"
-        tools:text="SUN-MON"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:daysBinding="@{itemXml.days}"
         app:layout_constraintStart_toStartOf="@+id/city"
-        app:layout_constraintTop_toBottomOf="@+id/city" />
+        app:layout_constraintTop_toBottomOf="@+id/city"
+        tools:text="SUN-MON" />
 
     <TextView
         android:id="@+id/timeView"
@@ -76,20 +89,11 @@
         android:layout_below="@+id/nameView"
         android:layout_alignParentEnd="true"
         android:text="@{itemXml.lastVisit}"
-        tools:text="SUN-MON"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintBottom_toBottomOf="@+id/daysView"
-        app:layout_constraintEnd_toEndOf="@+id/nameView" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_height="2dp"
-        android:layout_below="@+id/area"
-        android:background="#CACACA"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/daysView" />
+        tools:text="SUN-MON" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
 </layout>

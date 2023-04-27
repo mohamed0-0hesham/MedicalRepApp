@@ -1,10 +1,11 @@
 package com.hesham.medicalRepApp.adapters
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
+import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.DoctorItemBinding
 import com.hesham.medicalRepApp.models.DoctorModel
 
@@ -22,7 +23,6 @@ class DoctorAdapter(private val listener: OnItemClickListener) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Log.i("Test", "From Adapter ${itemList[position]}")
-//        holder.binding.nameView.text = itemList[position].name
         holder.binding.itemXml = itemList[position]
     }
 

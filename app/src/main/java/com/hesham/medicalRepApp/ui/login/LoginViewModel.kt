@@ -71,7 +71,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun sendEmailVerification() {
+    fun sendEmailVerification() {
         user?.sendEmailVerification()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -89,13 +89,13 @@ class LoginViewModel : ViewModel() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user!!.isEmailVerified) {
+//                    val user = auth.currentUser
+//                    if (user!!.isEmailVerified) {
                         _loginRequestState.value = "Successful Login"
-                    } else {
-                        _loginRequestState.value =
-                            "Please check your Email for verification"
-                    }
+//                    } else {
+//                        _loginRequestState.value =
+//                            "Please check your Email for verification"
+//                    }
                 } else {
                     _loginRequestState.value =
                         "login failed ${task.exception!!.message}"

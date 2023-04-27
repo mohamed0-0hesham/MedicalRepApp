@@ -3,6 +3,7 @@
     <color name="colorPrimary">#FF3F51B5</color>
     <color name="colorPrimaryVariant">#303F9F</color>
     <color name="blueOp_30">#4D27007E</color>
+    <color name="backgroundColor">#EBEDFD</color>
     <color name="purple_200">#81C784</color>
     <color name="colorSecondary">#4DB6AC</color>
     <color name="colorSecondaryVariant">#FF018786</color>
