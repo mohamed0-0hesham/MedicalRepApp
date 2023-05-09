@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF3F51B5</color>
-    <color name="colorPrimaryVariant">#303F9F</color>
-    <color name="blueOp_30">#4D27007E</color>
-    <color name="backgroundColor">#EBEDFD</color>
+    <color name="colorPrimary">#00A4B5</color>
+    <color name="colorPrimaryVariant">#0C3657</color>
+    <color name="blueOp_30">#0C3759</color>
+    <color name="backgroundColor">#FAFAFC</color>
     <color name="purple_200">#81C784</color>
-    <color name="colorSecondary">#4DB6AC</color>
+    <color name="colorSecondary">#01B2BF</color>
     <color name="colorSecondaryVariant">#FF018786</color>
     <color name="red">#B71C1C</color>
     <color name="black">#FF000000</color>

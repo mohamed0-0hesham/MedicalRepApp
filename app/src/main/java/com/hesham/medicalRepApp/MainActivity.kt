@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,11 +12,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.hesham.medicalRepApp.databinding.ActivityMainBinding
-import com.hesham.medicalRepApp.methods.BindingAdapters.Companion.updateNavHeader
-import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
+import com.hesham.medicalRepApp.methods.Utilities.Companion.updateNavHeader
 import com.hesham.medicalRepApp.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {

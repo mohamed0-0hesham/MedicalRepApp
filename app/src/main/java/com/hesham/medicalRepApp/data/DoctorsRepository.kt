@@ -1,15 +1,20 @@
 package com.hesham.medicalRepApp.data
 
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hesham.medicalRepApp.listeners.DoctorsListener
+import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTOR_DAYS
+import com.hesham.medicalRepApp.methods.Utilities.Companion.LAST_VISIT
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
+import java.util.Calendar
 
 class DoctorsRepository {
     private val database = FirebaseDatabase.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val ref = database.reference
+    val calendar =Calendar.getInstance()
 
     fun getAreasList(city: String): ArrayList<String> {
         val areaList = arrayListOf<String>()
@@ -24,7 +29,7 @@ class DoctorsRepository {
 
     fun addDoctor(doctor: DoctorModel) {
         db.collection("Doctors")
-            .document()
+            .document(doctor.name+doctor.phoneNum)
             .set(doctor)
     }
 
@@ -35,6 +40,27 @@ class DoctorsRepository {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     for (doc in task.result) {
+                        val doctor = doc.toObject(DoctorModel::class.java)
+                        list.add(doctor)
+                    }
+                    DoctorsViewModel().doctorList.value = list
+                    listener.getDoctorsList(list)
+                }
+            }
+    }
+
+    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String) {
+        val list: ArrayList<DoctorModel> = arrayListOf()
+        val toDay=calendar.get(Calendar.DAY_OF_WEEK)
+        db.collection("Doctors")
+            .whereLessThanOrEqualTo(LAST_VISIT,beforeTwoWeek)
+//            .whereArrayContains(DOCTOR_DAYS,toDay)
+            .orderBy(LAST_VISIT)
+            .limit(10)
+            .addSnapshotListener { value, error ->
+                list.clear()
+                if (error == null) {
+                    for (doc in value!!) {
                         val doctor = doc.toObject(DoctorModel::class.java)
                         list.add(doctor)
                     }

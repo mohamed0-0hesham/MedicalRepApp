@@ -3,18 +3,28 @@ package com.hesham.medicalRepApp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hesham.medicalRepApp.data.DoctorsRepository
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
+import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.models.DayModel
 import com.hesham.medicalRepApp.models.DoctorModel
+import java.util.Calendar
+import java.util.Date
 
 class HomeViewModel : ViewModel() {
-
-    val selectedDay: MutableLiveData<DayModel> = MutableLiveData()
+    private val repository = DoctorsRepository()
+    val doctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
+    val selectedDay: MutableLiveData<Date> = MutableLiveData()
     var selectedDayItem: MutableLiveData<CalendarDayLayoutBinding> = MutableLiveData()
     val lastSelectedDayItem: MutableLiveData<CalendarDayLayoutBinding> = MutableLiveData()
+    val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun getScheduledDoctorsList(selectedDate:Date) {
+        val futureDate = selectedDate.time - (14 * 24 * 60 * 60 * 1000)
+        repository.getScheduledDoctors(object : DoctorsListener {
+            override fun getDoctorsList(list: List<DoctorModel>) {
+                doctorList.value=list
+            }
+        },futureDate.toString())
     }
-    val text: LiveData<String> = _text
 }

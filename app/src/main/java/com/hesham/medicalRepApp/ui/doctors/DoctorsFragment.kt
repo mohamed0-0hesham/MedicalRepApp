@@ -11,6 +11,7 @@ import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.DoctorAdapter
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.FragmentDoctorsBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_RECYCLER
 import com.hesham.medicalRepApp.models.DoctorModel
 
 class DoctorsFragment : Fragment(), OnItemClickListener {

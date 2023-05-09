@@ -7,15 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
-import com.hesham.medicalRepApp.models.DayModel
+import com.hesham.medicalRepApp.methods.Utilities
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 
 class DaysAdapter(context: Context?, private val listener: OnDayItemClickListener) :
     RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
-    private var itemList: List<DayModel> = emptyList()
-    private val calendar=Calendar.getInstance()
+    private var itemList: List<Date> = emptyList()
+    private val date=Calendar.getInstance().time
     private val context=context
-    var selectDay: Int=15
+    private var selectDay: Int=date.date-1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DaysViewHolder {
         return DaysViewHolder(
             CalendarDayLayoutBinding.inflate(
@@ -26,31 +29,35 @@ class DaysAdapter(context: Context?, private val listener: OnDayItemClickListene
     }
 
     override fun onBindViewHolder(holder: DaysViewHolder, position: Int) {
-        holder.binding.dayItemXml = itemList[position]
-        if (position==15){
+        val dayOfWeek =SimpleDateFormat("EEE").format(itemList[position])
+        val dayOfMonth =SimpleDateFormat("d").format(itemList[position])
+        holder.binding.dayOfWeek.text=dayOfWeek
+        holder.binding.dayOfMonth.text = dayOfMonth
+
+        if (date.date==itemList[position].date &&date.month==itemList[position].month){
             holder.binding.calendarDayText.setBackgroundColor(context!!.resources.getColor(R.color.colorPrimary))
-            holder.binding.textView8.setTextColor(context.resources.getColor(R.color.red))
+            holder.binding.dayOfMonth.setTextColor(context.resources.getColor(R.color.red))
         }else{
-            holder.binding.textView8.setTextColor(context!!.resources.getColor(R.color.black))
+            holder.binding.dayOfMonth.setTextColor(context!!.resources.getColor(R.color.black))
         }
-//        holder.binding.calendarDayText.setOnClickListener {
-//            selectDay=position
-////            notifyDataSetChanged();
-//        }
+
         if(selectDay==position){
-            holder.binding.calendarDayText.setBackgroundColor(context!!.resources.getColor(R.color.colorSecondaryVariant))
+            holder.binding.calendarDayText.setBackgroundColor(context.resources.getColor(R.color.colorSecondary))
         }
         else {
-            holder.binding.calendarDayText.setBackgroundColor(context!!.resources.getColor(R.color.white))
+            holder.binding.calendarDayText.setBackgroundColor(context.resources.getColor(R.color.white))
         }
     }
 
     override fun getItemCount(): Int = itemList.size
 
 
-    fun setData(itemList: List<DayModel>) {
+    fun setData(itemList: List<Date>) {
         this.itemList = itemList
         notifyDataSetChanged()
+    }
+    fun setSelectDay(selectDay: Int) {
+        this.selectDay=selectDay
     }
 
 
@@ -58,8 +65,11 @@ class DaysAdapter(context: Context?, private val listener: OnDayItemClickListene
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
+
+                selectDay=bindingAdapterPosition
                 listener.onItemClick(bindingAdapterPosition, itemList[bindingAdapterPosition],binding)
             }
         }
     }
+
 }

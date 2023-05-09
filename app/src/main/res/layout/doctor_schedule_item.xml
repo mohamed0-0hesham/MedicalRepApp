@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="itemXml"
+            type="com.hesham.medicalRepApp.models.DoctorModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:outlineSpotShadowColor="@color/white"
+        app:cardCornerRadius="25dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/round_outline"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                app:getImageByGlide="@{itemXml.photoUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                <TextView
+                    android:id="@+id/drText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dr"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/nameView" />
+
+                <TextView
+                    android:id="@+id/nameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{itemXml.name}"
+                    app:layout_constraintStart_toEndOf="@+id/drText"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Mohamed Ali" />
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nameView"
+                    android:layout_alignStart="@+id/nameView"
+                    android:paddingEnd="10dp"
+                    android:text="@{itemXml.area}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:layout_constraintStart_toStartOf="@+id/drText"
+                    app:layout_constraintTop_toBottomOf="@+id/nameView"
+                    tools:text="Area" />
+
+
+                <TextView
+                    android:id="@+id/timeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nameView"
+                    android:layout_alignParentEnd="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    app:getDate="@{itemXml.lastVisit}"
+                    app:layout_constraintStart_toStartOf="@+id/area"
+                    app:layout_constraintTop_toBottomOf="@+id/area"
+                    tools:text="SUN-MON" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

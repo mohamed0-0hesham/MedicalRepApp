@@ -9,7 +9,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.MedicalRepApp.AppBarOverlay">
+        android:theme="@style/Theme.MedicalRepApp.AppBarOverlay"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -18,7 +19,8 @@
             android:outlineSpotShadowColor="@color/white"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:popupTheme="@style/Theme.MedicalRepApp.PopupOverlay" />
+            app:popupTheme="@style/Theme.MedicalRepApp.PopupOverlay"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
-import com.hesham.medicalRepApp.databinding.DoctorItemBinding
-import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_RECYCLER
+import com.hesham.medicalRepApp.databinding.DoctorScheduleItemBinding
 import com.hesham.medicalRepApp.models.DoctorModel
 
-class DoctorAdapter(private val listener: OnItemClickListener) :
-    RecyclerView.Adapter<DoctorAdapter.MyViewHolder>() {
+class DoctorScheduleAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<DoctorScheduleAdapter.MyViewHolder>() {
     private var itemList: List<DoctorModel> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
-            DoctorItemBinding.inflate(
+            DoctorScheduleItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
             ), listener
@@ -33,7 +32,7 @@ class DoctorAdapter(private val listener: OnItemClickListener) :
     }
 
 
-    inner class MyViewHolder(var binding: DoctorItemBinding, listener: OnItemClickListener) :
+    inner class MyViewHolder(var binding: DoctorScheduleItemBinding, listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {

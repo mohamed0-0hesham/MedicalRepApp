@@ -4,6 +4,7 @@ class DoctorModel {
     var id: String? = null
     var name: String? = null
     var specialty: String? = null
+    var photoUrl:String?=null
     var phoneNum:String?=null
     var days: List<Int>? = null
     var city: String? = null
@@ -21,34 +22,37 @@ class DoctorModel {
     }
 
     constructor(
-        id: String,
-        name: String,
-        specialty: String,
-        phoneNum:String,
-        days: List<Int>,
-        gender: String,
+        id: String?,
+        name: String?,
+        specialty: String?,
+        photoUrl: String?,
+        phoneNum: String?,
+        days: List<Int>?,
+        city: String?,
+        gender: String?,
+        area: String?,
         location: List<Double>?,
-        visitsByMonth: Int,
-        city: String,
-        area: String,
-        center: String,
-        products: List<Int>,
-        notes: String,
-        lastVisit: String
+        center: String?,
+        visitsByMonth: Int?,
+        lastVisit: String?,
+        products: List<Int>?,
+        notes: String?
     ) {
         this.id = id
         this.name = name
-        this.days = days
         this.specialty = specialty
-        this.phoneNum=phoneNum
-        this.gender = gender
-        this.location = location
-        this.visitsByMonth = visitsByMonth
+        this.photoUrl = photoUrl
+        this.phoneNum = phoneNum
+        this.days = days
         this.city = city
+        this.gender = gender
         this.area = area
+        this.location = location
         this.center = center
+        this.visitsByMonth = visitsByMonth
+        this.lastVisit = lastVisit
         this.products = products
         this.notes = notes
-        this.lastVisit = lastVisit
     }
+
 }
