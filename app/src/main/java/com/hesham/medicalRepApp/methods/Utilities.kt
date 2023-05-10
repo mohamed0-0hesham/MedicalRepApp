@@ -4,10 +4,14 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.TextView
+import com.google.android.gms.common.api.Response
 import com.google.android.gms.tasks.Task
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.hesham.medicalRepApp.R
+import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.models.DoctorModel
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -26,13 +31,21 @@ class Utilities {
         val calendar = Calendar.getInstance()
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
-        val DOCTORS_COLLECTION = "Doctors"
-        val PHOTO_URL = "photoUrl"
+        const val DOCTORS_COLLECTION = "Doctors"
+        const val PHOTO_URL = "photoUrl"
         val DOCTORS_RECYCLER = "DoctorsFragment"
         val DOCTOR_SCHEDULE="SCHEDULE"
-        val LAST_VISIT="lastVisit"
-        val DOCTOR_DAYS="days"
+        const val LAST_VISIT="lastVisit"
+        const val DOCTOR_DAYS="days"
 
+        fun colorStatusBarIcons(window: Window, color: Int) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                window.statusBarColor = Color.WHITE
+            } else {
+                window.statusBarColor = color
+            }
+        }
 
         fun updateNavHeader(header: View) {
             val auth = FirebaseAuth.getInstance()

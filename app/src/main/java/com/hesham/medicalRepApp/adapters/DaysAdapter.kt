@@ -1,18 +1,18 @@
 package com.hesham.medicalRepApp.adapters
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
-import com.hesham.medicalRepApp.methods.Utilities
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-class DaysAdapter(context: Context?, private val listener: OnDayItemClickListener) :
+class DaysAdapter(context: Context, private val listener: OnDayItemClickListener) :
     RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
     private var itemList: List<Date> = emptyList()
     private val date=Calendar.getInstance().time
@@ -35,14 +35,18 @@ class DaysAdapter(context: Context?, private val listener: OnDayItemClickListene
         holder.binding.dayOfMonth.text = dayOfMonth
 
         if (date.date==itemList[position].date &&date.month==itemList[position].month){
-            holder.binding.calendarDayText.setBackgroundColor(context!!.resources.getColor(R.color.colorPrimary))
             holder.binding.dayOfMonth.setTextColor(context.resources.getColor(R.color.red))
+            holder.binding.dayOfWeek.setTextColor(context.resources.getColor(R.color.red))
+
         }else{
-            holder.binding.dayOfMonth.setTextColor(context!!.resources.getColor(R.color.black))
+            holder.binding.dayOfMonth.setTextColor(context.resources.getColor(R.color.colorPrimaryVariant))
+            holder.binding.dayOfWeek.setTextColor(context.resources.getColor(R.color.colorPrimaryVariant))
         }
 
         if(selectDay==position){
-            holder.binding.calendarDayText.setBackgroundColor(context.resources.getColor(R.color.colorSecondary))
+            holder.binding.calendarDayText.setBackgroundColor(context.resources.getColor(R.color.colorPrimary))
+            holder.binding.dayOfMonth.setTextColor(context.resources.getColor(R.color.backgroundColor))
+            holder.binding.dayOfWeek.setTextColor(context.resources.getColor(R.color.backgroundColor))
         }
         else {
             holder.binding.calendarDayText.setBackgroundColor(context.resources.getColor(R.color.white))
@@ -65,7 +69,6 @@ class DaysAdapter(context: Context?, private val listener: OnDayItemClickListene
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-
                 selectDay=bindingAdapterPosition
                 listener.onItemClick(bindingAdapterPosition, itemList[bindingAdapterPosition],binding)
             }

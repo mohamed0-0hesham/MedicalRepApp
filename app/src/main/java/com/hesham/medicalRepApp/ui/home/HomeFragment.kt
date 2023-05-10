@@ -2,9 +2,16 @@ package com.hesham.medicalRepApp.ui.home
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GravityCompat
+import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -30,6 +37,7 @@ class HomeFragment : Fragment() {
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
     private val calendar = Calendar.getInstance()
+    private lateinit var firstSelectedCard: CardView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,21 +61,28 @@ class HomeFragment : Fragment() {
 
         homeViewModel.selectedDayItem.observe(viewLifecycleOwner) { layout ->
             if (homeViewModel.lastSelectedDayItem.value != null) {
-                homeViewModel.lastSelectedDayItem.value!!.calendarDayText
-                    .setBackgroundColor(resources.getColor(R.color.white))
+                homeViewModel.lastSelectedDayItem.value!!.apply {
+                    calendarDayText.setBackgroundColor(resources.getColor(R.color.white))
+                    dayOfMonth.setTextColor(resources.getColor(R.color.blueOp_30))
+                    dayOfWeek.setTextColor(resources.getColor(R.color.blueOp_30))
+                }
             }
-            layout.calendarDayText.setBackgroundColor(resources.getColor(R.color.colorSecondary))
+            layout.apply {
+                calendarDayText.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                dayOfMonth.setTextColor(resources.getColor(R.color.backgroundColor))
+                dayOfWeek.setTextColor(resources.getColor(R.color.backgroundColor))
+            }
             homeViewModel.lastSelectedDayItem.value = layout
         }
 
     }
 
     private fun uiInit() {
-        if (homeViewModel.selectedDay.value==null){
+        if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
         }
         homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!)
-        daysAdapter = DaysAdapter(context, object : OnDayItemClickListener {
+        daysAdapter = DaysAdapter(requireContext(), object : OnDayItemClickListener {
             override fun onItemClick(
                 position: Int,
                 dayItem: Date,
@@ -80,12 +95,12 @@ class HomeFragment : Fragment() {
             }
         })
 
-        scheduledAdapter=DoctorScheduleAdapter(object : OnItemClickListener {
-                override fun onItemClick(position: Int, doctorModel: DoctorModel) {
-                    homeViewModel.selectedDoctor.value = doctorModel
-                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
-                }
+        scheduledAdapter = DoctorScheduleAdapter(object : OnItemClickListener {
+            override fun onItemClick(position: Int, doctorModel: DoctorModel) {
+                homeViewModel.selectedDoctor.value = doctorModel
+                findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
             }
+        }
         )
         binding.scheduleRecycler.adapter = scheduledAdapter
 
@@ -98,7 +113,7 @@ class HomeFragment : Fragment() {
 
         binding.daysRecyclerView.adapter = daysAdapter
         getDays(calendar)
-        binding.daysRecyclerView.scrollToPosition(homeViewModel.selectedDay.value!!.date-3)
+        binding.daysRecyclerView.scrollToPosition(homeViewModel.selectedDay.value!!.date - 3)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,7 +129,7 @@ class HomeFragment : Fragment() {
     private fun getDays(calendar: Calendar) {
         val list = ArrayList<Date>()
         val cal = Calendar.getInstance()
-        calendar.time = calendar.time
+        cal.time = calendar.time
         for (i in 1..cal.getMaximum(Calendar.DAY_OF_MONTH)) {
             cal.set(Calendar.DAY_OF_MONTH, i)
             list.add(cal.time)
@@ -131,7 +146,7 @@ class HomeFragment : Fragment() {
                 calendar.set(year, month, dayOfMonth)
                 homeViewModel.selectedDay.value = calendar.time
                 getDays(calendar)
-                binding.daysRecyclerView.smoothScrollToPosition(homeViewModel.selectedDay.value!!.date-1)
+                binding.daysRecyclerView.smoothScrollToPosition(homeViewModel.selectedDay.value!!.date - 1)
             }
 
         val datePickerDialog = DatePickerDialog(

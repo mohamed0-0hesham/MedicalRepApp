@@ -9,24 +9,35 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/backgroundColor"
+        app:elevation="0dp"
         android:theme="@style/Theme.MedicalRepApp.AppBarOverlay"
         >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:titleTextColor="@color/white"
-            android:outlineSpotShadowColor="@color/white"
+            app:titleTextColor="@color/backgroundColor"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/Theme.MedicalRepApp.PopupOverlay"
-            />
+            android:background="@color/backgroundColor"
+            >
+            <Button
+                android:id="@+id/navButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:icon="@drawable/menu_alt_03_svgrepo_com"
+                app:iconTint="@color/colorPrimaryVariant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <include layout="@layout/content_main" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--        android:id="@+id/fab"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

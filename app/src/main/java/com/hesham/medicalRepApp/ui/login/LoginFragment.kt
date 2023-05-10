@@ -32,6 +32,7 @@ class LoginFragment : Fragment() {
     ): View {
         if (viewModel.user!=null){
             startActivity(Intent(requireActivity(), MainActivity::class.java))
+            requireActivity().finish()
         }
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root

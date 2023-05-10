@@ -12,12 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <!-- Customize your theme here. -->
-    </style>
-
-    <style name="Theme.MedicalRepApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+<!--    <style name="Theme.MedicalRepApp.NoActionBar">-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--    </style>-->
 
     <style name="Theme.MedicalRepApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

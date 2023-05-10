@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -137,17 +139,21 @@ class AddDoctorFragment : Fragment() {
     }
 
     private fun onSave(): DoctorModel? {
-        val editList = arrayListOf(
-            binding.addDoctorName.editText,
-            binding.specialty.editText,
-            binding.PhoneNum.editText,
-            binding.gender.editText,
-            binding.city.editText,
+        val theme: Resources.Theme = requireContext().theme
+        val inputLayoutList = arrayListOf(
+            binding.addDoctorName,
+            binding.specialty,
+            binding.PhoneNum,
+            binding.gender,
+            binding.city,
         )
-        for (edit in editList) {
-            if (edit!!.text.trim().isNullOrEmpty()) {
-                edit.setBackgroundColor(resources.getColor(R.color.red))
-                Toast.makeText(context, "${edit.hint} is required", Toast.LENGTH_SHORT).show()
+        for (inputLayout in inputLayoutList) {
+            if (inputLayout.editText!!.text.trim().isEmpty()) {
+                inputLayout.apply {
+                    error="${inputLayout.editText!!.hint} is required"
+                    boxStrokeErrorColor= ColorStateList.valueOf(resources.getColor(R.color.red))
+                    errorIconDrawable=resources.getDrawable(R.drawable.error_svgrepo_com,theme)
+                }
                 return null
             }
         }

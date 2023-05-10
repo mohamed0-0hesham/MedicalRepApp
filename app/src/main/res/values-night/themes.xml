@@ -5,13 +5,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/backgroundColor</item>
+        <item name="colorAccent">#F06292</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

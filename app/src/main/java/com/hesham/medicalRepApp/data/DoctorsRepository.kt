@@ -1,5 +1,6 @@
 package com.hesham.medicalRepApp.data
 
+import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,12 +50,11 @@ class DoctorsRepository {
             }
     }
 
-    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String) {
+    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String,day:Int) {
         val list: ArrayList<DoctorModel> = arrayListOf()
-        val toDay=calendar.get(Calendar.DAY_OF_WEEK)
         db.collection("Doctors")
             .whereLessThanOrEqualTo(LAST_VISIT,beforeTwoWeek)
-//            .whereArrayContains(DOCTOR_DAYS,toDay)
+            .whereArrayContains(DOCTOR_DAYS,day)
             .orderBy(LAST_VISIT)
             .limit(10)
             .addSnapshotListener { value, error ->
@@ -66,7 +66,9 @@ class DoctorsRepository {
                     }
                     DoctorsViewModel().doctorList.value = list
                     listener.getDoctorsList(list)
+                    Log.i("Test","getScheduledDoctors error == null")
                 }
+                Log.i("Test","getScheduledDoctors error ="+error?.message)
             }
     }
 

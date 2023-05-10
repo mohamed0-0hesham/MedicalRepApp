@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.hesham.medicalRepApp.databinding.ActivityMainBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.colorStatusBarIcons
 import com.hesham.medicalRepApp.methods.Utilities.Companion.updateNavHeader
 import com.hesham.medicalRepApp.ui.login.LoginActivity
 
@@ -28,7 +29,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        colorStatusBarIcons(window,resources.getColor(R.color.blueOp_30))
         setSupportActionBar(binding.appBarMain.toolbar)
+
+//        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_alt_03_svgrepo_com)
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val header = navView.getHeaderView(0)
