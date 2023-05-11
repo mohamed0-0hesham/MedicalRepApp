@@ -60,12 +60,13 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.selectedDayItem.observe(viewLifecycleOwner) { layout ->
-            if (homeViewModel.lastSelectedDayItem.value != null) {
-                homeViewModel.lastSelectedDayItem.value!!.apply {
-                    calendarDayText.setBackgroundColor(resources.getColor(R.color.white))
-                    dayOfMonth.setTextColor(resources.getColor(R.color.blueOp_30))
-                    dayOfWeek.setTextColor(resources.getColor(R.color.blueOp_30))
-                }
+            if (homeViewModel.lastSelectedDayItem.value == null) {
+                homeViewModel.lastSelectedDayItem.value = daysAdapter.getLayout()
+            }
+            homeViewModel.lastSelectedDayItem.value!!.apply {
+                calendarDayText.setBackgroundColor(resources.getColor(R.color.white))
+                dayOfMonth.setTextColor(resources.getColor(R.color.blueOp_30))
+                dayOfWeek.setTextColor(resources.getColor(R.color.blueOp_30))
             }
             layout.apply {
                 calendarDayText.setBackgroundColor(resources.getColor(R.color.colorPrimary))
