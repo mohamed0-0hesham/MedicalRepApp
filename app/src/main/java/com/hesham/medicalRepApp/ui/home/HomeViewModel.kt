@@ -16,12 +16,12 @@ class HomeViewModel : ViewModel() {
     val lastSelectedDayItem: MutableLiveData<CalendarDayLayoutBinding> = MutableLiveData()
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
 
-    fun getScheduledDoctorsList(selectedDate:Date) {
+    fun getScheduledDoctorsList(selectedDate:Date,city:String) {
         val futureDate = selectedDate.time - (14 * 24 * 60 * 60 * 1000)
         repository.getScheduledDoctors(object : DoctorsListener {
             override fun getDoctorsList(list: List<DoctorModel>) {
                 doctorList.value=list
             }
-        },futureDate.toString(),selectedDate.day)
+        },futureDate.toString(),selectedDate.day,city)
     }
 }

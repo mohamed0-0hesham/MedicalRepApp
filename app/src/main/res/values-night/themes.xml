@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/backgroundColor</item>
-        <item name="colorAccent">#F06292</item>
+        <!-- date Picker Color -->
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
 
         <!-- Secondary brand color. -->

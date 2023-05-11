@@ -8,6 +8,8 @@
     <color name="colorSecondary">#01B2BF</color>
     <color name="colorSecondaryVariant">#FF018786</color>
     <color name="red">#B71C1C</color>
+    <color name="blue">#3A81C5</color>
+    <color name="orange">#F2A173</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="trans">#00FFFFFF</color>

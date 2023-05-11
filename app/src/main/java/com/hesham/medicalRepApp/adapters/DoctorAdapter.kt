@@ -1,10 +1,13 @@
 package com.hesham.medicalRepApp.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.DoctorItemBinding
+import com.hesham.medicalRepApp.databinding.DoctorScheduleItemBinding
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_RECYCLER
 import com.hesham.medicalRepApp.models.DoctorModel
 

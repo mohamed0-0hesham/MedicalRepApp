@@ -3,6 +3,7 @@ package com.hesham.medicalRepApp.models
 class ProductsModel {
     var id:String?=null
     var name:String?=null
+    var photoUrl:String?=null
     var normalPrice:Int?=null
     var minPrice:Int?=null
     var category:String?=null
@@ -15,6 +16,7 @@ class ProductsModel {
     constructor(
         id: String?,
         name: String?,
+        photoUrl: String?,
         normalPrice: Int?,
         minPrice: Int?,
         category: String?,
@@ -22,6 +24,7 @@ class ProductsModel {
     ) {
         this.id = id
         this.name = name
+        this.photoUrl = photoUrl
         this.normalPrice = normalPrice
         this.minPrice = minPrice
         this.category = category

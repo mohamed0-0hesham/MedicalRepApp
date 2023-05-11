@@ -1,5 +1,7 @@
 package com.hesham.medicalRepApp.methods
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.hesham.medicalRepApp.MainActivity
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.models.DoctorModel
@@ -37,6 +40,7 @@ class Utilities {
         val DOCTOR_SCHEDULE="SCHEDULE"
         const val LAST_VISIT="lastVisit"
         const val DOCTOR_DAYS="days"
+        const val CITY="city"
 
         fun colorStatusBarIcons(window: Window, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -65,17 +69,17 @@ class Utilities {
             return dateFormatter.format(calendar.time)
         }
 
-        fun showAlert() {
-//            val dialog = AlertDialog.Builder(context)
-//            dialog.setView(
-//                requireActivity().layoutInflater.inflate(
-//                    R.layout.pick_time_dialog,
-//                    null
-//                )
-//            )
-//            dialog.create()
-//
-//            dialog.show()
+        fun showAlert(activity: Activity) {
+            val dialog = AlertDialog.Builder(activity)
+            dialog.setView(
+                activity.layoutInflater.inflate(
+                    R.layout.pick_time_dialog,
+                    null
+                )
+            )
+            dialog.create()
+
+            dialog.show()
         }
 
         fun createChip(name: String, id: Int, context: Context): Chip {

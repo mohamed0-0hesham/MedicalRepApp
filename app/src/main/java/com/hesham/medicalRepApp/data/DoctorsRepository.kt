@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hesham.medicalRepApp.listeners.DoctorsListener
+import com.hesham.medicalRepApp.methods.Utilities.Companion.CITY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTOR_DAYS
 import com.hesham.medicalRepApp.methods.Utilities.Companion.LAST_VISIT
 import com.hesham.medicalRepApp.models.DoctorModel
@@ -50,11 +51,12 @@ class DoctorsRepository {
             }
     }
 
-    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String,day:Int) {
+    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String,day:Int,city: String) {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection("Doctors")
             .whereLessThanOrEqualTo(LAST_VISIT,beforeTwoWeek)
             .whereArrayContains(DOCTOR_DAYS,day)
+            .whereEqualTo(CITY,city)
             .orderBy(LAST_VISIT)
             .limit(10)
             .addSnapshotListener { value, error ->

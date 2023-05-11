@@ -70,5 +70,6 @@
     <string name="_2">2</string>
     <string name="visits_par_month">Visits par month</string>
     <string name="visit">visit</string>
+    <string name="start_location">Start Location</string>
 
 </resources>

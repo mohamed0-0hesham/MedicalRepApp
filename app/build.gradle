@@ -75,4 +75,7 @@ dependencies {
 
     //Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+    //carousel layout manager
+    implementation 'com.mig35:carousellayoutmanager:1.4.6'
 }

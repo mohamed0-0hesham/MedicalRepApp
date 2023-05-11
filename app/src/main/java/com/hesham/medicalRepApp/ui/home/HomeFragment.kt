@@ -1,12 +1,17 @@
 package com.hesham.medicalRepApp.ui.home
 
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
@@ -22,6 +27,7 @@ import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.showAlert
 import com.hesham.medicalRepApp.models.DoctorModel
 
 import java.text.SimpleDateFormat
@@ -37,6 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
     private val calendar = Calendar.getInstance()
+    private val selectedCity = "Domiat"
     private lateinit var firstSelectedCard: CardView
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,11 +59,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
+        homeViewModel.doctorList.observe(viewLifecycleOwner) { list ->
+            scheduledAdapter.setData(list)
+        }
+
         homeViewModel.selectedDay.observe(viewLifecycleOwner) { date ->
             daysAdapter.setSelectDay(date.date - 1)
             val dateFormatter = SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH)
-            binding.monthPickerbutton.text = dateFormatter.format(date)
-            homeViewModel.getScheduledDoctorsList(date!!)
+            binding.monthPickerButton.text = dateFormatter.format(date)
+            homeViewModel.getScheduledDoctorsList(date!!, selectedCity)
         }
 
         homeViewModel.selectedDayItem.observe(viewLifecycleOwner) { layout ->
@@ -78,11 +89,12 @@ class HomeFragment : Fragment() {
 
     }
 
+
     private fun uiInit() {
         if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
         }
-        homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!)
+        homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, selectedCity)
         daysAdapter = DaysAdapter(requireContext(), object : OnDayItemClickListener {
             override fun onItemClick(
                 position: Int,
@@ -105,12 +117,18 @@ class HomeFragment : Fragment() {
         )
         binding.scheduleRecycler.adapter = scheduledAdapter
 
-        homeViewModel.doctorList.observe(viewLifecycleOwner) { list ->
-            scheduledAdapter.setData(list)
-        }
-        binding.monthPickerbutton.setOnClickListener {
+        binding.monthPickerButton.setOnClickListener {
             datePicker()
         }
+        val cities = resources.getStringArray(R.array.cities)
+        val citiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
+        binding.autoCompleteCity.setAdapter(citiesAdapter)
+
+        val onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemAtPosition(position) as String
+            Toast.makeText(requireContext(), "Selected item: $selectedItem", Toast.LENGTH_SHORT).show()
+        }
+        binding.autoCompleteCity.onItemClickListener=onItemClickListener
 
         binding.daysRecyclerView.adapter = daysAdapter
         getDays(calendar)

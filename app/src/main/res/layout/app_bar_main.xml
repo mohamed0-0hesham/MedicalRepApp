@@ -21,17 +21,17 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/backgroundColor"
             >
-            <Button
-                android:id="@+id/navButton"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_gravity="start"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                app:icon="@drawable/menu_alt_03_svgrepo_com"
-                app:iconTint="@color/colorPrimaryVariant"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+<!--            <Button-->
+<!--                android:id="@+id/navButton"-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:icon="@drawable/menu_alt_03_svgrepo_com"-->
+<!--                app:iconTint="@color/colorPrimaryVariant"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                />-->
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
