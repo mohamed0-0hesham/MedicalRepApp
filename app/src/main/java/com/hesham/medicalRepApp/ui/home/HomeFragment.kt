@@ -1,22 +1,12 @@
 package com.hesham.medicalRepApp.ui.home
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GravityCompat
-import androidx.core.view.get
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,13 +17,9 @@ import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
-import com.hesham.medicalRepApp.methods.Utilities.Companion.showAlert
 import com.hesham.medicalRepApp.models.DoctorModel
-
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -43,8 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
     private val calendar = Calendar.getInstance()
-    private val selectedCity = "Domiat"
-    private lateinit var firstSelectedCard: CardView
+    private var selectedCity = "Domiat"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,8 +110,8 @@ class HomeFragment : Fragment() {
         binding.autoCompleteCity.setAdapter(citiesAdapter)
 
         val onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position) as String
-            Toast.makeText(requireContext(), "Selected item: $selectedItem", Toast.LENGTH_SHORT).show()
+            selectedCity = parent.getItemAtPosition(position) as String
+            homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, selectedCity)
         }
         binding.autoCompleteCity.onItemClickListener=onItemClickListener
 

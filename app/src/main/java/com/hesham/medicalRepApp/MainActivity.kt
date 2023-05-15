@@ -1,9 +1,12 @@
 package com.hesham.medicalRepApp
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowInsets
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,8 +36,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
 //        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_alt_03_svgrepo_com)
+
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+//        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_alt_03_svgrepo_com)
         navView.setupWithNavController(navController)
     }
 
@@ -65,8 +69,10 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
     private fun toLoginActivity() {
         FirebaseAuth.getInstance().signOut()

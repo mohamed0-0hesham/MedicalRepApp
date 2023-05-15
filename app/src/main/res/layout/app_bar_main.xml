@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             app:titleTextColor="@color/backgroundColor"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/backgroundColor"
+            android:background="@color/colorPrimary"
             >
 <!--            <Button-->
 <!--                android:id="@+id/navButton"-->

@@ -33,6 +33,11 @@ class DoctorsRepository {
         db.collection("Doctors")
             .document(doctor.name+doctor.phoneNum)
             .set(doctor)
+        db.collection("Doctors")
+            .document(doctor.name+doctor.phoneNum)
+            .collection("clinics")
+            .document(doctor.name+doctor.area)
+            .set(doctor)
     }
 
     fun getDoctors(listener: DoctorsListener) {

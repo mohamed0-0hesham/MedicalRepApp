@@ -1,29 +1,35 @@
 package com.hesham.medicalRepApp.methods
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.TextView
-import com.google.android.gms.common.api.Response
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.hesham.medicalRepApp.MainActivity
 import com.hesham.medicalRepApp.R
-import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.models.DoctorModel
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -34,13 +40,14 @@ class Utilities {
         val calendar = Calendar.getInstance()
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
+        private const val LOCATION_REQUEST_CODE = 100
         const val DOCTORS_COLLECTION = "Doctors"
         const val PHOTO_URL = "photoUrl"
         val DOCTORS_RECYCLER = "DoctorsFragment"
-        val DOCTOR_SCHEDULE="SCHEDULE"
-        const val LAST_VISIT="lastVisit"
-        const val DOCTOR_DAYS="days"
-        const val CITY="city"
+        val DOCTOR_SCHEDULE = "SCHEDULE"
+        const val LAST_VISIT = "lastVisit"
+        const val DOCTOR_DAYS = "days"
+        const val CITY = "city"
 
         fun colorStatusBarIcons(window: Window, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -136,7 +143,7 @@ class Utilities {
         fun uploadToStorage(bitmap: Bitmap?, doctor: DoctorModel) {
             val db = FirebaseFirestore.getInstance()
             if (bitmap != null) {
-                val riversRef: StorageReference = storageRef.child("images/"+bitmap.toString())
+                val riversRef: StorageReference = storageRef.child("images/" + bitmap.toString())
                 val byteStream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteStream)
                 val photo = byteStream.toByteArray()
@@ -144,15 +151,84 @@ class Utilities {
                 uploadTask.addOnCompleteListener { task: Task<UploadTask.TaskSnapshot> ->
                     if (task.isSuccessful) {
                         Log.d("Storage", "onSuccess " + task.result)
-                        storageRef.child("images/"+bitmap.toString()).downloadUrl
+                        storageRef.child("images/" + bitmap.toString()).downloadUrl
                             .addOnSuccessListener { uri ->
-                                db.collection(DOCTORS_COLLECTION).document(doctor.name+doctor.phoneNum)
+                                db.collection(DOCTORS_COLLECTION)
+                                    .document(doctor.name + doctor.phoneNum)
                                     .update(PHOTO_URL, uri.toString())
                             }
                     } else {
                         Log.d("Storage", "onFailure" + task.exception!!.message)
                     }
                 }
+            }
+        }
+
+        fun startLocation(db: FirebaseFirestore?, activity: Activity) {
+            checkPermissions(activity)
+            val fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(activity)
+            if (ActivityCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        val geoPoint = GeoPoint(location.latitude, location.longitude)
+                        if (FirebaseAuth.getInstance().currentUser != null) {
+//                            updateCurrentUserFromDb(db, "userLocation", geoPoint)
+                        }
+                    }
+                }
+            } else {
+                ActivityCompat.requestPermissions(
+                    activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_REQUEST_CODE
+                )
+            }
+        }
+
+        fun showSettingAlert(context: Context) {
+            val alertDialog = AlertDialog.Builder(context)
+            alertDialog.setTitle("GPS setting!")
+            alertDialog.setMessage("GPS is not enabled, Do you want to go to settings menu? ")
+            alertDialog.setPositiveButton("Setting") { dialog, which ->
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                context.startActivity(intent)
+            }
+            alertDialog.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+            alertDialog.show()
+        }
+
+        fun checkPermissions(activity: Activity) {
+            LocationServices.getFusedLocationProviderClient(activity)
+            if (ActivityCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_REQUEST_CODE
+                )
+            }
+            val locationManager =
+                activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                showSettingAlert(activity)
             }
         }
     }
