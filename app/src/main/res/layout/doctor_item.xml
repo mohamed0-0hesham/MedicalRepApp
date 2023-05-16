@@ -21,18 +21,17 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/round_outline"
-                android:clipToOutline="true"
                 android:scaleType="centerCrop"
                 app:getImageByGlide="@{itemXml.photoUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedImageView"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -59,12 +58,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nameView"
                 android:layout_alignStart="@+id/nameView"
+                android:paddingEnd="10dp"
                 android:text="@{itemXml.area}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toBottomOf="@+id/city"
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/nameView"
-                android:paddingEnd="10dp"
                 tools:text="Area" />
 
             <TextView
