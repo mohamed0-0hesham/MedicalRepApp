@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#00A4B5</color>
-    <color name="colorPrimaryVariant">#0C3657</color>
+    <color name="colorPrimaryVariant">#0190A0</color>
     <color name="blueOp_30">#0C3759</color>
     <color name="backgroundColor">#F8F9FA</color>
     <color name="purple_200">#81C784</color>
-    <color name="colorSecondary">#01B2BF</color>
-    <color name="colorSecondaryVariant">#FF018786</color>
+    <color name="colorSecondary">#0C3759</color>
+    <color name="colorSecondaryVariant">#0A304E</color>
     <color name="red">#B71C1C</color>
     <color name="blue">#3A81C5</color>
     <color name="orange">#F2A173</color>

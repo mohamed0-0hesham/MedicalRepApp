@@ -61,8 +61,8 @@ class HomeFragment : Fragment() {
             }
             homeViewModel.lastSelectedDayItem.value!!.apply {
                 calendarDayText.setBackgroundColor(resources.getColor(R.color.white))
-                dayOfMonth.setTextColor(resources.getColor(R.color.blueOp_30))
-                dayOfWeek.setTextColor(resources.getColor(R.color.blueOp_30))
+                dayOfMonth.setTextColor(resources.getColor(R.color.colorPrimary))
+                dayOfWeek.setTextColor(resources.getColor(R.color.colorPrimary))
             }
             layout.apply {
                 calendarDayText.setBackgroundColor(resources.getColor(R.color.colorPrimary))
