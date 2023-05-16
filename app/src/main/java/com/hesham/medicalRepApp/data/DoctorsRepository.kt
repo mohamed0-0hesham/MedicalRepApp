@@ -16,7 +16,7 @@ class DoctorsRepository {
     private val database = FirebaseDatabase.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val ref = database.reference
-    val calendar =Calendar.getInstance()
+    val calendar = Calendar.getInstance()
 
     fun getAreasList(city: String): ArrayList<String> {
         val areaList = arrayListOf<String>()
@@ -30,13 +30,13 @@ class DoctorsRepository {
     }
 
     fun addDoctor(doctor: DoctorModel) {
+        val ref = db.collection("Doctors").document()
+        doctor.id = ref.id
+        ref.set(doctor)
         db.collection("Doctors")
-            .document(doctor.name+doctor.phoneNum)
-            .set(doctor)
-        db.collection("Doctors")
-            .document(doctor.name+doctor.phoneNum)
+            .document(ref.id)
             .collection("clinics")
-            .document(doctor.name+doctor.area)
+            .document(doctor.city + doctor.area)
             .set(doctor)
     }
 
@@ -56,10 +56,10 @@ class DoctorsRepository {
             }
     }
 
-    fun searchDoctor(listener: DoctorsListener,name:String) {
+    fun searchDoctor(listener: DoctorsListener, name: String) {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection("Doctors")
-            .whereGreaterThanOrEqualTo("name",name)
+            .whereGreaterThanOrEqualTo("name", name)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -73,12 +73,17 @@ class DoctorsRepository {
             }
     }
 
-    fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String,day:Int,city: String) {
+    fun getScheduledDoctors(
+        listener: DoctorsListener,
+        beforeTwoWeek: String,
+        day: Int,
+        city: String
+    ) {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection("Doctors")
-            .whereLessThanOrEqualTo(LAST_VISIT,beforeTwoWeek)
-            .whereArrayContains(DOCTOR_DAYS,day)
-            .whereEqualTo(CITY,city)
+            .whereLessThanOrEqualTo(LAST_VISIT, beforeTwoWeek)
+            .whereArrayContains(DOCTOR_DAYS, day)
+            .whereEqualTo(CITY, city)
             .orderBy(LAST_VISIT)
             .limit(10)
             .addSnapshotListener { value, error ->
@@ -90,9 +95,9 @@ class DoctorsRepository {
                     }
                     DoctorsViewModel().doctorList.value = list
                     listener.getDoctorsList(list)
-                    Log.i("Test","getScheduledDoctors error == null")
+                    Log.i("Test", "getScheduledDoctors error == null")
                 }
-                Log.i("Test","getScheduledDoctors error ="+error?.message)
+                Log.i("Test", "getScheduledDoctors error =" + error?.message)
             }
     }
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.hesham.medicalRepApp.R
@@ -18,6 +19,7 @@ import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
 import com.hesham.medicalRepApp.models.DoctorModel
+import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var daysAdapter: DaysAdapter
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
+    private  val viewModel: DoctorsViewModel by activityViewModels()
     private val calendar = Calendar.getInstance()
     private var selectedCity = "Domiat"
     override fun onCreateView(
@@ -95,7 +98,7 @@ class HomeFragment : Fragment() {
 
         scheduledAdapter = DoctorScheduleAdapter(object : OnItemClickListener {
             override fun onItemClick(position: Int, doctorModel: DoctorModel) {
-                homeViewModel.selectedDoctor.value = doctorModel
+                viewModel.selectedDoctor.value=doctorModel
                 findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
             }
         }
