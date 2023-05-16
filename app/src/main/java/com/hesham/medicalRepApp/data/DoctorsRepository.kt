@@ -56,6 +56,23 @@ class DoctorsRepository {
             }
     }
 
+    fun searchDoctor(listener: DoctorsListener,name:String) {
+        val list: ArrayList<DoctorModel> = arrayListOf()
+        db.collection("Doctors")
+            .whereGreaterThanOrEqualTo("name",name)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (doc in task.result) {
+                        val doctor = doc.toObject(DoctorModel::class.java)
+                        list.add(doctor)
+                    }
+                    DoctorsViewModel().doctorList.value = list
+                    listener.getDoctorsList(list)
+                }
+            }
+    }
+
     fun getScheduledDoctors(listener: DoctorsListener,beforeTwoWeek:String,day:Int,city: String) {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection("Doctors")

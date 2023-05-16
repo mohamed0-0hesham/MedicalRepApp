@@ -161,7 +161,7 @@ class AddDoctorFragment : Fragment() {
 
         return DoctorModel(
             "dummy",
-            name = binding.addDoctorName.editText!!.text.toString(),
+            name = binding.addDoctorName.editText!!.text.toString().lowercase(),
             specialty = binding.specialty.editText!!.text.toString(),
             photoUrl = "",
             phoneNum = binding.PhoneNum.editText!!.text.toString(),

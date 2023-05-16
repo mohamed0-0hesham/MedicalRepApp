@@ -1,9 +1,11 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -37,9 +39,31 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
         viewModel.doctorList.observe(viewLifecycleOwner) { list ->
             myAdapter.setData(list)
         }
+        viewModel.searchDoctorList.observe(viewLifecycleOwner) { list ->
+            myAdapter.setData(list)
+        }
         binding.DoctorAddButton.setOnClickListener {
             findNavController().navigate(R.id.action_nav_doctors_to_addDoctorFragment)
         }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()){
+                    viewModel.getSearchDoctorList(query.toString())
+                }else{
+                    myAdapter.setData(viewModel.doctorList.value!!)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()){
+                    viewModel.getSearchDoctorList(newText.toString())
+                }else{
+                    myAdapter.setData(viewModel.doctorList.value!!)
+                }
+                return true
+            }
+        })
     }
 
     override fun onDestroyView() {

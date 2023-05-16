@@ -1,6 +1,7 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hesham.medicalRepApp.data.DoctorsRepository
@@ -11,6 +12,8 @@ class DoctorsViewModel : ViewModel() {
 
     private val repository = DoctorsRepository()
     val doctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
+
+    val searchDoctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
 
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
 
@@ -32,5 +35,14 @@ class DoctorsViewModel : ViewModel() {
                 doctorList.value=list
             }
         })
+    }
+
+    fun getSearchDoctorList(name:String) {
+        repository.searchDoctor(object : DoctorsListener {
+            override fun getDoctorsList(list: List<DoctorModel>) {
+                Log.i("Test","getDoctorsList "+list.size)
+                searchDoctorList.value=list
+            }
+        }, name)
     }
 }
