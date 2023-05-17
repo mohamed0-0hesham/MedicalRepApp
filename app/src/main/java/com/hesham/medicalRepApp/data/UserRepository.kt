@@ -1,8 +1,12 @@
 package com.hesham.medicalRepApp.data
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.hesham.medicalRepApp.methods.Utilities
+import com.hesham.medicalRepApp.methods.Utilities.Companion.END_LOCATION
+import com.hesham.medicalRepApp.methods.Utilities.Companion.END_TIME
 import com.hesham.medicalRepApp.methods.Utilities.Companion.REPORTS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.USERS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.VISITS_COLLECTION
@@ -46,11 +50,25 @@ class UserRepository {
         visitRef.set(visit)
     }
 
-    fun createReport(report: ReportModel) {
-        val reportRef = db.collection(USERS_COLLECTION)
+    fun startLocation(report: ReportModel) {
+         db.collection(USERS_COLLECTION)
             .document(currentUser!!.uid)
             .collection(REPORTS_COLLECTION)
             .document(report.date!!)//we could create it by date
-            .set(report)
+            .set(report).addOnCompleteListener {
+                task->
+                 Log.i("Test", task.exception.toString())
+             }
+    }
+
+    fun endLocation(report: ReportModel) {
+        db.collection(USERS_COLLECTION)
+            .document(currentUser!!.uid)
+            .collection(REPORTS_COLLECTION)
+            .document(report.date!!)//we could create it by date
+            .update(mapOf(END_LOCATION to report.endLocation, END_TIME to report.endTime)).addOnCompleteListener {
+                    task->
+                Log.i("Test", task.exception.toString())
+            }
     }
 }

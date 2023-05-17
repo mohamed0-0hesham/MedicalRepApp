@@ -1,7 +1,9 @@
 package com.hesham.medicalRepApp.ui.home
 
 import android.app.DatePickerDialog
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.GeoPoint
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.DaysAdapter
 import com.hesham.medicalRepApp.adapters.DoctorScheduleAdapter
@@ -19,6 +22,8 @@ import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
+import com.hesham.medicalRepApp.listeners.LocationListener
+import com.hesham.medicalRepApp.methods.Utilities.Companion.getCurrentLocaton
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
 import java.text.SimpleDateFormat
@@ -33,6 +38,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private val viewModel: DoctorsViewModel by activityViewModels()
     private val calendar = Calendar.getInstance()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -75,6 +81,45 @@ class HomeFragment : Fragment() {
             homeViewModel.lastSelectedDayItem.value = layout
         }
 
+        homeViewModel.startedLocation.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.startCard.setOnClickListener {
+                    getCurrentLocaton(requireActivity(), object : LocationListener {
+                        override fun getLocation(location: Location?) {
+                            if (location != null) {
+                                val startPoint = GeoPoint(location.latitude, location.longitude)
+                                homeViewModel.endLocation(
+                                    startPoint,
+                                    currentUser!!.uid,
+                                    calendar.timeInMillis
+                                )
+                                homeViewModel.startedLocation.value = false
+                                binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
+                            }
+                        }
+
+                    })
+                }
+            } else {
+                binding.startCard.setOnClickListener {
+                    getCurrentLocaton(requireActivity(), object : LocationListener {
+                        override fun getLocation(location: Location?) {
+                            if (location != null) {
+                                val startPoint = GeoPoint(location.latitude, location.longitude)
+                                Log.i("Test", "${location.latitude}")
+                                homeViewModel.startLocation(
+                                    startPoint,
+                                    currentUser!!.uid,
+                                    calendar.timeInMillis
+                                )
+                                homeViewModel.startedLocation.value = true
+                                binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
+                            }
+                        }
+                    })
+                }
+            }
+        }
     }
 
 
@@ -82,7 +127,11 @@ class HomeFragment : Fragment() {
         if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
         }
-        homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, homeViewModel.selectedCity.value!!)
+        homeViewModel.getScheduledDoctorsList(
+            homeViewModel.selectedDay.value!!,
+            homeViewModel.selectedCity.value!!
+        )
+
         daysAdapter = DaysAdapter(requireContext(), object : OnDayItemClickListener {
             override fun onItemClick(
                 position: Int,
@@ -110,7 +159,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.LocationBtn.apply {
-            text =homeViewModel.selectedCity.value
+            text = homeViewModel.selectedCity.value
             setOnClickListener {
                 binding.LocationBtn.visibility = View.INVISIBLE
                 binding.cityTextInput.visibility = View.VISIBLE
@@ -123,7 +172,8 @@ class HomeFragment : Fragment() {
 
         val onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             homeViewModel.selectedCity.value = parent.getItemAtPosition(position) as String
-            homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!,
+            homeViewModel.getScheduledDoctorsList(
+                homeViewModel.selectedDay.value!!,
                 homeViewModel.selectedCity.value!!
             )
             binding.cityTextInput.visibility = View.INVISIBLE

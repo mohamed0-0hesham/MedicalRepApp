@@ -11,6 +11,8 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -52,12 +54,18 @@ class Utilities {
         const val USERS_COLLECTION = "Users"
         const val VISITS_COLLECTION = "Visits"
         const val REPORTS_COLLECTION = "Reports"
+        const val END_LOCATION = "endLocation"
+        const val END_TIME = "endTime"
         const val PHOTO_URL = "photoUrl"
         val DOCTORS_RECYCLER = "DoctorsFragment"
         val DOCTOR_SCHEDULE = "SCHEDULE"
         const val LAST_VISIT = "lastVisit"
         const val DOCTOR_DAYS = "days"
         const val CITY = "city"
+        const val GEOCODER_ADDRESS = "address"
+        const val GEOCODER_FULL_ADDRESS = "fullAddress"
+        const val GEOCODER_CITY = "city"
+        const val GEOCODER_AREA = "area"
 
         fun colorStatusBarIcons(window: Window, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -229,6 +237,26 @@ class Utilities {
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     MapActivity.LOCATION_PERMISSION_REQUEST_CODE
                 )
+            }
+        }
+
+        fun formattedDateOf(time: Long): String {
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            return dateFormat.format(Date(time))
+        }
+
+        fun locationToGeocoder(context: Context, location: Location): MutableList<Address>? {
+            val geocoder = Geocoder(context)
+            return geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        }
+
+        fun getFromGeocoder(addresses:MutableList<Address>,code:String): Any {
+            return when(code){
+                GEOCODER_ADDRESS->addresses[0]
+                GEOCODER_FULL_ADDRESS->addresses[0].getAddressLine(0)
+                GEOCODER_CITY->addresses[0].locality
+                GEOCODER_AREA->addresses[0].subLocality
+                else -> addresses[0]
             }
         }
     }

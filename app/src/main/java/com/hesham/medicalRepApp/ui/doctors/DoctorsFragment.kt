@@ -23,6 +23,11 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
     private val viewModel: DoctorsViewModel by activityViewModels()
     private var myAdapter = DoctorAdapter(this)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel.getDoctorsList()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +40,6 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.doctorsRecycler.adapter = myAdapter
-        viewModel.getDoctorsList()
         viewModel.doctorList.observe(viewLifecycleOwner) { list ->
             myAdapter.setData(list)
         }
