@@ -22,6 +22,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.hesham.medicalRepApp.methods.Utilities.Companion.checkPermissions
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -35,7 +36,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
 
@@ -54,7 +55,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        checkPermission()
+        checkPermissions(this)
+        currentLocationIntoMap()
 
         binding.saveBtn.setOnClickListener {
             if (mlatling != null) {
@@ -85,7 +87,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun checkPermission(){
+    private fun currentLocationIntoMap(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             // Enable the location layer on the map

@@ -3,6 +3,7 @@ package com.hesham.medicalRepApp.methods
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -20,7 +21,10 @@ import android.view.View
 import android.view.Window
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +34,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.hesham.medicalRepApp.R
+import com.hesham.medicalRepApp.listeners.DoctorsListener
+import com.hesham.medicalRepApp.listeners.LocationListener
 import com.hesham.medicalRepApp.models.DoctorModel
+import com.hesham.medicalRepApp.ui.doctors.MapActivity
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,6 +49,9 @@ class Utilities {
         val storageRef = storage.reference
         private const val LOCATION_REQUEST_CODE = 100
         const val DOCTORS_COLLECTION = "Doctors"
+        const val USERS_COLLECTION = "Users"
+        const val VISITS_COLLECTION = "Visits"
+        const val REPORTS_COLLECTION = "Reports"
         const val PHOTO_URL = "photoUrl"
         val DOCTORS_RECYCLER = "DoctorsFragment"
         val DOCTOR_SCHEDULE = "SCHEDULE"
@@ -166,33 +176,7 @@ class Utilities {
 
         fun startLocation(db: FirebaseFirestore?, activity: Activity) {
             checkPermissions(activity)
-            val fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(activity)
-            if (ActivityCompat.checkSelfPermission(
-                    activity,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                    activity,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        val geoPoint = GeoPoint(location.latitude, location.longitude)
-                        if (FirebaseAuth.getInstance().currentUser != null) {
-//                            updateCurrentUserFromDb(db, "userLocation", geoPoint)
-                        }
-                    }
-                }
-            } else {
-                ActivityCompat.requestPermissions(
-                    activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    LOCATION_REQUEST_CODE
-                )
-            }
+
         }
 
         fun showSettingAlert(context: Context) {
@@ -225,10 +209,26 @@ class Utilities {
                     LOCATION_REQUEST_CODE
                 )
             }
-            val locationManager =
-                activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 showSettingAlert(activity)
+            }
+        }
+
+        fun getCurrentLocaton(activity: Activity,listener: LocationListener){
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location: Location ->
+                    listener.getLocation(location)
+                }
+            } else {
+                // Request location permissions if not granted
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    MapActivity.LOCATION_PERMISSION_REQUEST_CODE
+                )
             }
         }
     }

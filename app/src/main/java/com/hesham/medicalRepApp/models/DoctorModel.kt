@@ -6,9 +6,9 @@ class DoctorModel {
     var specialty: String? = null
     var photoUrl:String?=null
     var phoneNum:String?=null
+    var gender: String? = null
     var days: List<Int>? = null
     var city: String? = null
-    var gender: String? = null
     var area: String? = null
     var location: List<Double>? = null
     var center: String? = null

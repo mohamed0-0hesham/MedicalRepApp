@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.hesham.medicalRepApp.databinding.ActivityMainBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.checkPermissions
 import com.hesham.medicalRepApp.methods.Utilities.Companion.colorStatusBarIcons
 import com.hesham.medicalRepApp.methods.Utilities.Companion.updateNavHeader
 import com.hesham.medicalRepApp.ui.login.LoginActivity
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
+        checkPermissions(this)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.DaysAdapter
 import com.hesham.medicalRepApp.adapters.DoctorScheduleAdapter
@@ -30,9 +31,8 @@ class HomeFragment : Fragment() {
     private lateinit var daysAdapter: DaysAdapter
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
-    private  val viewModel: DoctorsViewModel by activityViewModels()
+    private val viewModel: DoctorsViewModel by activityViewModels()
     private val calendar = Calendar.getInstance()
-    private var selectedCity = "Domiat"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
             daysAdapter.setSelectDay(date.date - 1)
             val dateFormatter = SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH)
             binding.monthPickerButton.text = dateFormatter.format(date)
-            homeViewModel.getScheduledDoctorsList(date!!, selectedCity)
+            homeViewModel.getScheduledDoctorsList(date!!, homeViewModel.selectedCity.value!!)
         }
 
         homeViewModel.selectedDayItem.observe(viewLifecycleOwner) { layout ->
@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
         if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
         }
-        homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, selectedCity)
+        homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, homeViewModel.selectedCity.value!!)
         daysAdapter = DaysAdapter(requireContext(), object : OnDayItemClickListener {
             override fun onItemClick(
                 position: Int,
@@ -98,7 +98,7 @@ class HomeFragment : Fragment() {
 
         scheduledAdapter = DoctorScheduleAdapter(object : OnItemClickListener {
             override fun onItemClick(position: Int, doctorModel: DoctorModel) {
-                viewModel.selectedDoctor.value=doctorModel
+                viewModel.selectedDoctor.value = doctorModel
                 findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
             }
         }
@@ -108,15 +108,31 @@ class HomeFragment : Fragment() {
         binding.monthPickerButton.setOnClickListener {
             datePicker()
         }
+
+        binding.LocationBtn.apply {
+            text =homeViewModel.selectedCity.value
+            setOnClickListener {
+                binding.LocationBtn.visibility = View.INVISIBLE
+                binding.cityTextInput.visibility = View.VISIBLE
+            }
+        }
+
         val cities = resources.getStringArray(R.array.cities)
         val citiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
         binding.autoCompleteCity.setAdapter(citiesAdapter)
 
         val onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            selectedCity = parent.getItemAtPosition(position) as String
-            homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!, selectedCity)
+            homeViewModel.selectedCity.value = parent.getItemAtPosition(position) as String
+            homeViewModel.getScheduledDoctorsList(homeViewModel.selectedDay.value!!,
+                homeViewModel.selectedCity.value!!
+            )
+            binding.cityTextInput.visibility = View.INVISIBLE
+            binding.LocationBtn.apply {
+                visibility = View.VISIBLE
+                text = homeViewModel.selectedCity.value
+            }
         }
-        binding.autoCompleteCity.onItemClickListener=onItemClickListener
+        binding.autoCompleteCity.onItemClickListener = onItemClickListener
 
         binding.daysRecyclerView.adapter = daysAdapter
         getDays(calendar)

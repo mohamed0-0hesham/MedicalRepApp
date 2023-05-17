@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import com.hesham.medicalRepApp.data.DoctorsRepository
+import com.hesham.medicalRepApp.data.UserRepository
+import com.hesham.medicalRepApp.models.UserModel
 import java.util.concurrent.TimeUnit
 
 class LoginViewModel : ViewModel() {
@@ -27,6 +30,8 @@ class LoginViewModel : ViewModel() {
     private val _loginRequestState: MutableLiveData<String> = MutableLiveData()
     val loginRequestState: LiveData<String> = _loginRequestState
 
+    private val userRepository = UserRepository()
+
     fun createAccount(
         activity: Activity,
         name: String,
@@ -35,6 +40,7 @@ class LoginViewModel : ViewModel() {
         password: String
     ) {
         mActivity = activity
+        val user=UserModel(null,null,name,email,phone,null,null,null)
         val emailAuth = auth.createUserWithEmailAndPassword(email, password)
         emailAuth.addOnCompleteListener(activity) { task ->
             if (task.isSuccessful) {
@@ -43,7 +49,8 @@ class LoginViewModel : ViewModel() {
                 sendEmailVerification()
                 setName(name)
                 verifyPhoneNum(phone)
-
+                user.id=FirebaseAuth.getInstance().currentUser?.uid
+                userRepository.saveUserData(user)
             } else {
                 _createRequestState.value = "${task.exception?.message}"
             }
@@ -67,6 +74,7 @@ class LoginViewModel : ViewModel() {
                             "isNotSuccessful ${task.exception?.message}"
                         Log.d("Test", "isNotSuccessful ${task.exception?.message}")
                     }
+
                 }
         }
     }
