@@ -252,7 +252,8 @@ class Utilities {
             return geocoder.getFromLocation(location.latitude, location.longitude, 1)
         }
 
-        fun getFromGeocoder(addresses:MutableList<Address>,code:String): Any {
+        fun getFromGeocoder(addresses:MutableList<Address>,code:String?): Any {
+            Log.i("Test","code ${code.toString()}")
             return when(code){
                 GEOCODER_ADDRESS->addresses[0]
                 GEOCODER_FULL_ADDRESS->addresses[0].getAddressLine(0)

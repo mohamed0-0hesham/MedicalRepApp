@@ -19,7 +19,6 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="full_name">Full Name</string>
     <string name="email">Email</string>
@@ -54,11 +53,96 @@
         <item>Female</item>
     </string-array>
 
-    <string-array name="cities">
+
+    <string-array name="specialties_array">
+        <item>Allergy and Immunology</item>
+        <item>Aesthetic Medicine</item>
+        <item>Anesthesiology</item>
+        <item>Cardiology</item>
+        <item>Dermatology</item>
+        <item>Emergency Medicine</item>
+        <item>Endocrinology</item>
+        <item>Family Medicine</item>
+        <item>Gastroenterology</item>
+        <item>Hematology and Oncology</item>
+        <item>Infectious Disease</item>
+        <item>Internal Medicine</item>
+        <item>Nephrology</item>
+        <item>Neurology</item>
+        <item>Obstetrics and Gynecology</item>
+        <item>Ophthalmology</item>
+        <item>Orthopedics</item>
+        <item>Otolaryngology</item>
+        <item>Pathology</item>
+        <item>Pediatrics</item>
+        <item>Physical Medicine and Rehabilitation</item>
+        <item>Psychiatry</item>
+        <item>Pulmonology</item>
+        <item>Radiology</item>
+        <item>Rheumatology</item>
+        <item>Surgery</item>
+        <item>Urology</item>
+    </string-array>
+
+    <string-array name="egypt_cities_array">
+        <item>Cairo</item>
+        <item>Giza</item>
         <item>Alexandria</item>
-        <item>Mansoura</item>
-        <item>Domiat</item>
-        <item>Behera</item>
+        <item>Dakahlia</item>
+        <item>Beheira</item>
+        <item>Faiyum</item>
+        <item>Gharbia</item>
+        <item>Ismailia</item>
+        <item>Monufia</item>
+        <item>Minya</item>
+        <item>Kalyubia</item>
+        <item>New Valley</item>
+        <item>Sharqia</item>
+        <item>Suez</item>
+        <item>Aswan</item>
+        <item>Assiut</item>
+        <item>Beni Suef</item>
+        <item>Port Said</item>
+        <item>Damietta</item>
+        <item>6th of October</item>
+        <item>Sheikh Zayed</item>
+        <item>North Sinai</item>
+        <item>South Sinai</item>
+        <item>Kafr El Sheikh</item>
+        <item>Matruh</item>
+        <item>Qena</item>
+        <item>Red Sea</item>
+        <item>Sohag</item>
+    </string-array>
+
+    <string-array name="egypt_governorates_array">
+        <item>Alexandria</item>
+        <item>Aswan</item>
+        <item>Asyut</item>
+        <item>Beheira</item>
+        <item>Beni Suef</item>
+        <item>Cairo</item>
+        <item>Dakahlia</item>
+        <item>Damietta</item>
+        <item>Faiyum</item>
+        <item>Gharbia</item>
+        <item>Giza</item>
+        <item>Ismailia</item>
+        <item>Kafr El Sheikh</item>
+        <item>Luxor</item>
+        <item>Matruh</item>
+        <item>Minya</item>
+        <item>Monufia</item>
+        <item>New Valley</item>
+        <item>North Sinai</item>
+        <item>Port Said</item>
+        <item>Qalyubia</item>
+        <item>Qena</item>
+        <item>Red Sea</item>
+        <item>Sharqia</item>
+        <item>Sohag</item>
+        <item>South Sinai</item>
+        <item>Suez</item>
     </string-array>
     <string name="title_activity_map">MapActivity</string>
     <string name="forgot_password">Forgot Password</string>
@@ -71,5 +155,6 @@
     <string name="visits_par_month">Visits par month</string>
     <string name="visit">visit</string>
     <string name="start_location">Start Location</string>
+    <string name="a_visit_to_dr">A Visit To Dr.</string>
 
 </resources>

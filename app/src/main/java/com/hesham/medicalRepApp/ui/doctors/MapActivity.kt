@@ -19,10 +19,12 @@ import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.ActivityMapBinding
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.hesham.medicalRepApp.methods.Utilities.Companion.checkPermissions
+import java.util.*
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -67,7 +69,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val test=data.extras?.get(EXTRA_DATA)
                 Log.i("Test","$test")
                 finish()
-                Toast.makeText(this, "$mlatling", Toast.LENGTH_LONG).show()
             } else
                 Toast.makeText(this, "you must Choose location to save", Toast.LENGTH_LONG).show()
         }
@@ -134,7 +135,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     location?.let {
                         val currentLatLng = LatLng(it.latitude, it.longitude)
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f))
-                        Toast.makeText(this, "location = $location",Toast.LENGTH_LONG).show()
                     }
                 }
             }

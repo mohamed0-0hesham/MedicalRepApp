@@ -24,6 +24,7 @@
     <style name="Theme.MedicalRepApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MedicalRepApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="RoundedImageView" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20%</item>
@@ -50,4 +51,17 @@
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
 
+    <style name="customTextLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">15dp</item>
+        <item name="boxCornerRadiusBottomStart">15dp</item>
+        <item name="boxCornerRadiusTopEnd">15dp</item>
+        <item name="boxCornerRadiusTopStart">15dp</item>
+    </style>
+
+    <style name="customExposedDropdownMenu" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxCornerRadiusBottomEnd">15dp</item>
+        <item name="boxCornerRadiusBottomStart">15dp</item>
+        <item name="boxCornerRadiusTopEnd">15dp</item>
+        <item name="boxCornerRadiusTopStart">15dp</item>
+    </style>
 </resources>

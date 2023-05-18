@@ -12,11 +12,10 @@ class DoctorsViewModel : ViewModel() {
 
     private val repository = DoctorsRepository()
     val doctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
-
     val searchDoctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
     val searchText: MutableLiveData<String> = MutableLiveData()
-
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
+    val addDoctorLocation: MutableLiveData<List<Double>> = MutableLiveData()
 
     fun addDoctor(doctorModel: DoctorModel) {
         repository.addDoctor(doctorModel)

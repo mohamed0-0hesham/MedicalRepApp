@@ -171,7 +171,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        val cities = resources.getStringArray(R.array.cities)
+        val cities = resources.getStringArray(R.array.egypt_cities_array)
         val citiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
         binding.autoCompleteCity.setAdapter(citiesAdapter)
 

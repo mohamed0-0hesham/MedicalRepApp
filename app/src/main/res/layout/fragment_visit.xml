@@ -1,68 +1,392 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.doctors.VisitFragment">
+    <data>
+        <variable
+            name="itemXml"
+            type="com.hesham.medicalRepApp.models.DoctorModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/visitTestView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/visit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" To Dr. "
-        app:layout_constraintEnd_toStartOf="@+id/doctorNameText"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visitTestView" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.doctors.DoctorDetailsFragment">
 
-    <TextView
-        android:id="@+id/doctorNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="doctorNameText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/visitTestView" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:paddingTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/doctorImageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/doctor_svgrepo_com"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doctorNameText" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:scaleType="centerCrop"
+                    app:getImageByGlide="@{itemXml.photoUrl}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/RoundedImageView"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/InText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="In "
-        app:layout_constraintEnd_toStartOf="@+id/dateText"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doctorImageView" />
+                <TextView
+                    android:id="@+id/aVisitTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="@string/a_visit_to_dr"
+                    android:textColor="@color/backgroundColor"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
-    <TextView
-        android:id="@+id/dateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dateText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/InText"
-        app:layout_constraintTop_toBottomOf="@+id/doctorImageView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:text="@{itemXml.name}"
+                    android:textColor="@color/backgroundColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/aVisitTest"
+                    app:layout_constraintTop_toBottomOf="@+id/aVisitTest"
+                    tools:text="John Doe" />
+
+                <TextView
+                    android:id="@+id/profile_specialty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@{itemXml.specialty}"
+                    android:textColor="@color/backgroundColor"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/profile_name"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_name"
+                    tools:text="Software Engineer" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/addDoctorName"
+                    style="@style/customTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/a_visit_to_dr">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/specialty"
+                    style="@style/customTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/specialty">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/PhoneNum"
+                    style="@style/customTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone_number"
+                    app:prefixText="+20"
+                    app:startIconDrawable="@drawable/ic_baseline_phone_24">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:singleLine="true"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipDaysGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:layout_editor_absoluteX="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/city"
+                        style="@style/customExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/textSize8dp"
+                        android:layout_weight="2"
+                        android:hint="@string/city">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/autoCompleteCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="alexandrie" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/gender"
+                        style="@style/customExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/gender"
+                        app:helperTextTextColor="@color/red">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/autoCompleteGender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="male" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/center"
+                        style="@style/customExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="2"
+                        android:hint="@string/center"
+                        app:layout_constraintEnd_toStartOf="@+id/textView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="alexandrie" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <RadioButton
+                            android:id="@+id/radio1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:checked="true"
+                            android:text="@string/_1" />
+
+                        <RadioButton
+                            android:id="@+id/radio2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_2" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/visits_par_month"
+                        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+                        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/area"
+                        style="@style/customExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/textSize8dp"
+                        android:layout_weight="2"
+                        android:hint="@string/area">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/autoCompleteArea"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="alexandrie" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/LocationBtn"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:text="@string/choose_location"
+                        android:textColor="@color/black"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/ic_baseline_location_on_24"
+                        app:iconTint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@+id/area"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/area"
+                        app:strokeColor="#BFB8B8" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/Products"
+                        style="@style/customExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="2"
+                        android:hint="@string/products">
+
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="alexandrie" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/LastVisitBtn"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:text="@string/last_visit"
+                        android:textColor="@color/black"
+                        app:cornerRadius="10dp"
+                        app:iconTint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/Products"
+                        app:strokeColor="#BFB8B8" />
+
+                </LinearLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/ProductsGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                    app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/notes"
+                    style="@style/customTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/notes">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/SaveButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/save"
+                    android:textColor="@color/black"
+                    app:strokeColor="#9E9E9E"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

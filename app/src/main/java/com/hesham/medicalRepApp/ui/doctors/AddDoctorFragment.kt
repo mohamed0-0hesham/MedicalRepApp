@@ -7,10 +7,13 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +25,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentAddDoctorBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_ADDRESS
+import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_AREA
+import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_CITY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
+import com.hesham.medicalRepApp.methods.Utilities.Companion.getFromGeocoder
+import com.hesham.medicalRepApp.methods.Utilities.Companion.locationToGeocoder
 import com.hesham.medicalRepApp.methods.Utilities.Companion.uploadToStorage
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.kizitonwose.calendar.core.daysOfWeek
@@ -57,26 +65,33 @@ class AddDoctorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         uiInit()
         onClickButtons()
-
     }
 
     private fun uiInit() {
-        var city = listOf<String>()
-
         val genders = resources.getStringArray(R.array.gender)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, genders)
         binding.autoCompleteGender.setAdapter(arrayAdapter)
         addChipToGroup()
 
-        val cities = resources.getStringArray(R.array.cities)
+        val cities = resources.getStringArray(R.array.egypt_cities_array)
         val citiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, cities)
         binding.autoCompleteCity.setAdapter(citiesAdapter)
-//        binding.autoCompleteCity.addTextChangedListener { it->
-//            city =viewModel.getAreas(it.toString())
-//            Log.i("Test", it.toString())
-//        }
-//            val areasAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, city)
-//            binding.autoCompleteArea.setAdapter(areasAdapter)
+
+        val specialties = resources.getStringArray(R.array.specialties_array)
+        val specialtiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, specialties)
+        binding.specialtyAutoCompleteText.setAdapter(specialtiesAdapter)
+
+        viewModel.addDoctorLocation.observe(viewLifecycleOwner){ location->
+            val geoCoder=Geocoder(requireContext(), Locale.ENGLISH).getFromLocation(location[0],location[1],1)
+            if (geoCoder!=null){
+                binding.autoCompleteCity.setText(geoCoder[0].adminArea?:"")
+                binding.autoCompleteArea.setText(geoCoder[0].locality?:"")
+                binding.LocationBtn.apply {
+                    textSize = resources.getDimension(R.dimen.textSize8dp)
+                    text=geoCoder[0].getAddressLine(0)?:""
+                }
+            }
+        }
     }
 
     private fun onClickButtons() {
@@ -109,7 +124,7 @@ class AddDoctorFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            location = data?.extras?.get(EXTRA_DATA) as List<Double>
+            viewModel.addDoctorLocation.value = data?.extras?.get(EXTRA_DATA) as List<Double>
         }
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
@@ -189,6 +204,7 @@ class AddDoctorFragment : Fragment() {
             selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
             selectedDate.set(Calendar.MINUTE, minute)
             selectedDate.timeInMillis
+            binding.LastVisitBtn.text=selectedDate.time.toString()
         }
         val timePickerDialog = TimePickerDialog(
             context,
