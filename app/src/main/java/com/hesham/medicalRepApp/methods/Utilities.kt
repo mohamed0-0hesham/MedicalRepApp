@@ -54,9 +54,11 @@ class Utilities {
         const val USERS_COLLECTION = "Users"
         const val VISITS_COLLECTION = "Visits"
         const val REPORTS_COLLECTION = "Reports"
-        const val END_LOCATION = "endLocation"
-        const val END_TIME = "endTime"
-        const val PHOTO_URL = "photoUrl"
+        const val CLINICS_COLLECTION = "clinics"
+        const val NAME_KEY = "name"
+        const val END_LOCATION_KEY = "endLocation"
+        const val END_TIME_KEY = "endTime"
+        const val PHOTO_URL_KEY = "photoUrl"
         val DOCTORS_RECYCLER = "DoctorsFragment"
         val DOCTOR_SCHEDULE = "SCHEDULE"
         const val LAST_VISIT = "lastVisit"
@@ -173,7 +175,7 @@ class Utilities {
                             .addOnSuccessListener { uri ->
                                 db.collection(DOCTORS_COLLECTION)
                                     .document(doctor.name + doctor.phoneNum)
-                                    .update(PHOTO_URL, uri.toString())
+                                    .update(PHOTO_URL_KEY, uri.toString())
                             }
                     } else {
                         Log.d("Storage", "onFailure" + task.exception!!.message)

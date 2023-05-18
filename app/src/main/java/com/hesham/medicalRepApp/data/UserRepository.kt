@@ -1,16 +1,13 @@
 package com.hesham.medicalRepApp.data
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hesham.medicalRepApp.methods.Utilities
-import com.hesham.medicalRepApp.methods.Utilities.Companion.END_LOCATION
-import com.hesham.medicalRepApp.methods.Utilities.Companion.END_TIME
+import com.hesham.medicalRepApp.methods.Utilities.Companion.END_LOCATION_KEY
+import com.hesham.medicalRepApp.methods.Utilities.Companion.END_TIME_KEY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.REPORTS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.USERS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.VISITS_COLLECTION
-import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.models.ReportModel
 import com.hesham.medicalRepApp.models.UserModel
 import com.hesham.medicalRepApp.models.VisitModel
@@ -24,21 +21,23 @@ class UserRepository {
             .document(user.id!!)
             .set(user)
     }
-    fun updateUserData(userId: String,key:String,value: Any) {
+
+    fun updateUserData(userId: String, key: String, value: Any) {
         db.collection(USERS_COLLECTION)
             .document(userId)
             .update(mapOf(key to value))
     }
-    fun addToFireStoreArray(userId: String,key:String,value: Any) {
+
+    fun addToFireStoreArray(userId: String, key: String, value: Any) {
         db.collection(USERS_COLLECTION)
             .document(userId)
-            .update(key,FieldValue.arrayUnion(value))
+            .update(key, FieldValue.arrayUnion(value))
     }
 
-    fun removeFromFireStoreArray(userId: String,key:String,value: Any) {
+    fun removeFromFireStoreArray(userId: String, key: String, value: Any) {
         db.collection(USERS_COLLECTION)
             .document(userId)
-            .update(key,FieldValue.arrayRemove(value))
+            .update(key, FieldValue.arrayRemove(value))
     }
 
     fun createVisit(visit: VisitModel) {
@@ -51,14 +50,12 @@ class UserRepository {
     }
 
     fun startLocation(report: ReportModel) {
-         db.collection(USERS_COLLECTION)
+        db.collection(USERS_COLLECTION)
             .document(currentUser!!.uid)
             .collection(REPORTS_COLLECTION)
             .document(report.date!!)//we could create it by date
-            .set(report).addOnCompleteListener {
-                task->
-                 Log.i("Test", task.exception.toString())
-             }
+            .set(report).addOnCompleteListener { task ->
+            }
     }
 
     fun endLocation(report: ReportModel) {
@@ -66,9 +63,8 @@ class UserRepository {
             .document(currentUser!!.uid)
             .collection(REPORTS_COLLECTION)
             .document(report.date!!)//we could create it by date
-            .update(mapOf(END_LOCATION to report.endLocation, END_TIME to report.endTime)).addOnCompleteListener {
-                    task->
-                Log.i("Test", task.exception.toString())
+            .update(mapOf(END_LOCATION_KEY to report.endLocation, END_TIME_KEY to report.endTime))
+            .addOnCompleteListener { task ->
             }
     }
 }

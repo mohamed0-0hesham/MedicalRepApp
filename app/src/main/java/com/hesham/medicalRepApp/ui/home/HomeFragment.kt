@@ -106,7 +106,6 @@ class HomeFragment : Fragment() {
                         override fun getLocation(location: Location?) {
                             if (location != null) {
                                 val startPoint = GeoPoint(location.latitude, location.longitude)
-                                Log.i("Test", "${location.latitude}")
                                 homeViewModel.startLocation(
                                     startPoint,
                                     currentUser!!.uid,
@@ -131,6 +130,12 @@ class HomeFragment : Fragment() {
             homeViewModel.selectedDay.value!!,
             homeViewModel.selectedCity.value!!
         )
+
+        if (homeViewModel.startedLocation.value!!){
+            binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
+        }else{
+            binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
+        }
 
         daysAdapter = DaysAdapter(requireContext(), object : OnDayItemClickListener {
             override fun onItemClick(

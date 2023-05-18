@@ -6,6 +6,8 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.methods.Utilities.Companion.CITY
+import com.hesham.medicalRepApp.methods.Utilities.Companion.CLINICS_COLLECTION
+import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTOR_DAYS
 import com.hesham.medicalRepApp.methods.Utilities.Companion.LAST_VISIT
 import com.hesham.medicalRepApp.models.DoctorModel
@@ -30,19 +32,20 @@ class DoctorsRepository {
     }
 
     fun addDoctor(doctor: DoctorModel) {
-        val ref = db.collection("Doctors").document()
+        val ref = db.collection(DOCTORS_COLLECTION).document()
         doctor.id = ref.id
         ref.set(doctor)
-        db.collection("Doctors")
+        db.collection(DOCTORS_COLLECTION)
             .document(ref.id)
-            .collection("clinics")
+            .collection(CLINICS_COLLECTION)
             .document(doctor.city + doctor.area)
             .set(doctor)
     }
 
     fun getDoctors(listener: DoctorsListener) {
         val list: ArrayList<DoctorModel> = arrayListOf()
-        db.collection("Doctors")
+        db.collection(DOCTORS_COLLECTION)
+            .orderBy(LAST_VISIT)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -58,7 +61,7 @@ class DoctorsRepository {
 
     fun searchDoctor(listener: DoctorsListener, name: String) {
         val list: ArrayList<DoctorModel> = arrayListOf()
-        db.collection("Doctors")
+        db.collection(DOCTORS_COLLECTION)
             .whereGreaterThanOrEqualTo("name", name)
             .get()
             .addOnCompleteListener { task ->
@@ -80,7 +83,7 @@ class DoctorsRepository {
         city: String
     ) {
         val list: ArrayList<DoctorModel> = arrayListOf()
-        db.collection("Doctors")
+        db.collection(DOCTORS_COLLECTION)
             .whereLessThanOrEqualTo(LAST_VISIT, beforeTwoWeek)
             .whereArrayContains(DOCTOR_DAYS, day)
             .whereEqualTo(CITY, city)
