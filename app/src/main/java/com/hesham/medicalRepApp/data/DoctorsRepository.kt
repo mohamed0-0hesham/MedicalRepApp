@@ -10,6 +10,7 @@ import com.hesham.medicalRepApp.methods.Utilities.Companion.CLINICS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTOR_DAYS
 import com.hesham.medicalRepApp.methods.Utilities.Companion.LAST_VISIT
+import com.hesham.medicalRepApp.methods.Utilities.Companion.NAME_KEY
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
 import java.util.Calendar
@@ -62,7 +63,8 @@ class DoctorsRepository {
     fun searchDoctor(listener: DoctorsListener, name: String) {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection(DOCTORS_COLLECTION)
-            .whereGreaterThanOrEqualTo("name", name)
+            .whereGreaterThanOrEqualTo(NAME_KEY, name)
+            .whereLessThanOrEqualTo(NAME_KEY, name + "\uf8ff")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
