@@ -41,17 +41,22 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         binding.doctorsRecycler.adapter = myAdapter
         viewModel.doctorList.observe(viewLifecycleOwner) { list ->
-            myAdapter.setData(list)
+            if (viewModel.searchText.value.isNullOrBlank()){
+                myAdapter.setData(list)
+            }
         }
         viewModel.searchDoctorList.observe(viewLifecycleOwner) { list ->
-            myAdapter.setData(list)
+            if (!viewModel.searchText.value.isNullOrBlank()){
+                myAdapter.setData(list)
+            }
         }
         binding.DoctorAddButton.setOnClickListener {
             findNavController().navigate(R.id.action_nav_doctors_to_addDoctorFragment)
         }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (!query.isNullOrEmpty()){
+                viewModel.searchText.value=query
+                if (!query.isNullOrBlank()){
                     viewModel.getSearchDoctorList(query.toString())
                 }else{
                     myAdapter.setData(viewModel.doctorList.value!!)
@@ -60,7 +65,8 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (!newText.isNullOrEmpty()){
+                viewModel.searchText.value=newText
+                if (!newText.isNullOrBlank()){
                     viewModel.getSearchDoctorList(newText.toString())
                 }else{
                     myAdapter.setData(viewModel.doctorList.value!!)
