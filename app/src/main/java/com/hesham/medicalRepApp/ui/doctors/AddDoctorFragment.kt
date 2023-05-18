@@ -8,29 +8,21 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.location.Geocoder
-import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentAddDoctorBinding
-import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_ADDRESS
-import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_AREA
-import com.hesham.medicalRepApp.methods.Utilities.Companion.GEOCODER_CITY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
-import com.hesham.medicalRepApp.methods.Utilities.Companion.getFromGeocoder
-import com.hesham.medicalRepApp.methods.Utilities.Companion.locationToGeocoder
 import com.hesham.medicalRepApp.methods.Utilities.Companion.uploadToStorage
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.kizitonwose.calendar.core.daysOfWeek
@@ -100,9 +92,8 @@ class AddDoctorFragment : Fragment() {
             val doctor = onSave()
             if (doctor != null) {
                 doctor.id=doctor.name+doctor.phoneNum
-                viewModel.addDoctor(doctor)
+                viewModel.addDoctor(doctor,bitmap)
                 viewModel.addCity(doctor.city!!, doctor.area!!)
-                uploadToStorage(bitmap,doctor)
                 findNavController().navigateUp()
             }
         }

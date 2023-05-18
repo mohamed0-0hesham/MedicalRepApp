@@ -1,10 +1,11 @@
 package com.hesham.medicalRepApp.data
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hesham.medicalRepApp.listeners.DoctorsListener
+import com.hesham.medicalRepApp.methods.Utilities
 import com.hesham.medicalRepApp.methods.Utilities.Companion.CITY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.CLINICS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_COLLECTION
@@ -32,7 +33,7 @@ class DoctorsRepository {
         return areaList
     }
 
-    fun addDoctor(doctor: DoctorModel) {
+    fun addDoctor(doctor: DoctorModel, bitmap: Bitmap?) {
         val ref = db.collection(DOCTORS_COLLECTION).document()
         doctor.id = ref.id
         ref.set(doctor)
@@ -41,6 +42,9 @@ class DoctorsRepository {
             .collection(CLINICS_COLLECTION)
             .document(doctor.city + doctor.area)
             .set(doctor)
+            .addOnSuccessListener {
+                Utilities.uploadToStorage(bitmap, doctor.id!!)
+            }
     }
 
     fun getDoctors(listener: DoctorsListener) {

@@ -14,15 +14,15 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/doctorImageView"
-                style="@style/RoundedImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="25dp"
                 android:contentDescription="@string/doctor_profile_picture"
                 android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedImageView"
                 app:srcCompat="@drawable/doctor_svgrepo_com" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,8 +51,8 @@
 
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:layout_width="match_parent"
                     android:id="@+id/specialtyAutoCompleteText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:singleLine="true" />

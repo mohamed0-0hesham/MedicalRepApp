@@ -1,7 +1,7 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 
-import android.util.Log
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hesham.medicalRepApp.data.DoctorsRepository
@@ -17,8 +17,8 @@ class DoctorsViewModel : ViewModel() {
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
     val addDoctorLocation: MutableLiveData<List<Double>> = MutableLiveData()
 
-    fun addDoctor(doctorModel: DoctorModel) {
-        repository.addDoctor(doctorModel)
+    fun addDoctor(doctorModel: DoctorModel, bitmap: Bitmap?) {
+        repository.addDoctor(doctorModel,bitmap)
     }
 
     fun addCity(city: String, area: String) {

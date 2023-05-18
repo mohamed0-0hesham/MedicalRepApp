@@ -3,7 +3,6 @@ package com.hesham.medicalRepApp.methods
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -25,20 +24,15 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.hesham.medicalRepApp.R
-import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.listeners.LocationListener
-import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.MapActivity
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -160,10 +154,10 @@ class Utilities {
             return inSampleSize
         }
 
-        fun uploadToStorage(bitmap: Bitmap?, doctor: DoctorModel) {
+        fun uploadToStorage(bitmap: Bitmap?, doctorId: String) {
             val db = FirebaseFirestore.getInstance()
             if (bitmap != null) {
-                val riversRef: StorageReference = storageRef.child("images/" + bitmap.toString())
+                val riversRef: StorageReference = storageRef.child("images/$doctorId")
                 val byteStream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteStream)
                 val photo = byteStream.toByteArray()
@@ -171,10 +165,10 @@ class Utilities {
                 uploadTask.addOnCompleteListener { task: Task<UploadTask.TaskSnapshot> ->
                     if (task.isSuccessful) {
                         Log.d("Storage", "onSuccess " + task.result)
-                        storageRef.child("images/" + bitmap.toString()).downloadUrl
+                        storageRef.child("images/" + doctorId).downloadUrl
                             .addOnSuccessListener { uri ->
                                 db.collection(DOCTORS_COLLECTION)
-                                    .document(doctor.name + doctor.phoneNum)
+                                    .document(doctorId)
                                     .update(PHOTO_URL_KEY, uri.toString())
                             }
                     } else {
