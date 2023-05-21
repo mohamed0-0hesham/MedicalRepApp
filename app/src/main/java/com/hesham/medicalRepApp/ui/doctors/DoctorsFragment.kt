@@ -1,7 +1,6 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.DoctorAdapter
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.FragmentDoctorsBinding
-import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_RECYCLER
 import com.hesham.medicalRepApp.models.DoctorModel
 
 class DoctorsFragment : Fragment(), OnItemClickListener {
@@ -55,25 +53,23 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
         }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchText.value=query
-                if (!query.isNullOrBlank()){
-                    viewModel.getSearchDoctorList(query.toString())
-                }else{
-                    myAdapter.setData(viewModel.doctorList.value!!)
-                }
-                return true
+                return search(query?.lowercase())
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.searchText.value=newText
-                if (!newText.isNullOrBlank()){
-                    viewModel.getSearchDoctorList(newText.toString())
-                }else{
-                    myAdapter.setData(viewModel.doctorList.value!!)
-                }
-                return true
+                return search(newText?.lowercase())
             }
         })
+    }
+
+    fun search(queryText: String?):Boolean{
+        viewModel.searchText.value = queryText
+        if (!queryText.isNullOrBlank()){
+            viewModel.getSearchDoctorList(queryText.toString())
+        }else{
+            myAdapter.setData(viewModel.doctorList.value!!)
+        }
+        return true
     }
 
     override fun onDestroyView() {

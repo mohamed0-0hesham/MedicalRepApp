@@ -3,6 +3,8 @@ package com.hesham.medicalRepApp.methods
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -22,6 +24,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -216,16 +219,21 @@ class Utilities {
                     LOCATION_REQUEST_CODE
                 )
             }
-            val locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val locationManager =
+                activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 showSettingAlert(activity)
             }
         }
 
-        fun getCurrentLocaton(activity: Activity,listener: LocationListener){
+        fun getCurrentLocaton(activity: Activity, listener: LocationListener) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
-            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location: Location ->
                     listener.getLocation(location)
                 }
@@ -239,9 +247,9 @@ class Utilities {
             }
         }
 
-        fun formattedDateOf(time: Long): String {
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
-            return dateFormat.format(Date(time))
+        fun formattedDateOf(time: Long, format: String): String {
+            val dateFormatter = SimpleDateFormat(format, Locale.ENGLISH)
+            return dateFormatter.format(Date(time))
         }
 
         fun locationToGeocoder(context: Context, location: Location): MutableList<Address>? {
@@ -249,30 +257,67 @@ class Utilities {
             return geocoder.getFromLocation(location.latitude, location.longitude, 1)
         }
 
-        fun getFromGeocoder(addresses:MutableList<Address>,code:String?): Any {
-            Log.i("Test","code ${code.toString()}")
-            return when(code){
-                GEOCODER_ADDRESS->addresses[0]
-                GEOCODER_FULL_ADDRESS->addresses[0].getAddressLine(0)
-                GEOCODER_CITY->addresses[0].locality
-                GEOCODER_AREA->addresses[0].subLocality
+        fun getFromGeocoder(addresses: MutableList<Address>, code: String?): Any {
+            Log.i("Test", "code ${code.toString()}")
+            return when (code) {
+                GEOCODER_ADDRESS -> addresses[0]
+                GEOCODER_FULL_ADDRESS -> addresses[0].getAddressLine(0)
+                GEOCODER_CITY -> addresses[0].locality
+                GEOCODER_AREA -> addresses[0].subLocality
                 else -> addresses[0]
             }
         }
 
         fun isNetworkConnected(context: Context): Boolean {
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val network = connectivityManager.activeNetwork ?: return false
-                val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+                val networkCapabilities =
+                    connectivityManager.getNetworkCapabilities(network) ?: return false
                 return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
             } else {
                 val networkInfo = connectivityManager.activeNetworkInfo
                 return networkInfo != null && networkInfo.isConnected
             }
         }
+
         fun showNoInternetToast(context: Context) {
             Toast.makeText(context, "There is no internet connection", Toast.LENGTH_SHORT).show()
+        }
+
+        fun datePicker(selectedDate: Calendar, requireContext: Context, btn: Button) {
+            val initialYear = selectedDate.get(Calendar.YEAR)
+            val initialMonth = selectedDate.get(Calendar.MONTH)
+            val initialDay = selectedDate.get(Calendar.DAY_OF_MONTH)
+            val initialHour = selectedDate.get(Calendar.HOUR_OF_DAY)
+            val initialMinute = selectedDate.get(Calendar.MINUTE)
+
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { viewTime, hourOfDay, minute ->
+                    selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    selectedDate.set(Calendar.MINUTE, minute)
+                    selectedDate.timeInMillis
+                btn.text = "At ${formattedDateOf(selectedDate.timeInMillis,"h:mm a dd MMM yyyy")}"
+                }
+            val timePickerDialog = TimePickerDialog(
+                requireContext,
+                timeSetListener,
+                initialHour, initialMinute,
+                false
+            )
+
+            val dateSetListener =
+                DatePickerDialog.OnDateSetListener { viewDate, year, month, dayOfMonth ->
+                    selectedDate.set(year, month, dayOfMonth)
+                    timePickerDialog.show()
+                }
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext,
+                dateSetListener,
+                initialYear, initialMonth, initialDay
+            )
+            datePickerDialog.show()
         }
     }
 }

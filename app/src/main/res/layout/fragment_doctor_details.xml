@@ -20,8 +20,11 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -45,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:text="@{itemXml.name}"
+                app:capitalizeName="@{itemXml.name}"
                 android:textColor="@color/backgroundColor"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -65,6 +68,26 @@
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toBottomOf="@+id/profile_name"
                 tools:text="Software Engineer" />
+
+            <Button
+                android:id="@+id/visitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textSize8dp"
+                android:text="Visit"
+                app:icon="@drawable/ic_baseline_calendar_month_24"
+                app:layout_constraintStart_toStartOf="@+id/profile_specialty"
+                app:layout_constraintTop_toBottomOf="@+id/profile_specialty" />
+
+            <Button
+                android:id="@+id/orderButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/textSize8dp"
+                android:text="Order"
+                app:icon="@drawable/order_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/visitButton"
+                app:layout_constraintStart_toEndOf="@+id/visitButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

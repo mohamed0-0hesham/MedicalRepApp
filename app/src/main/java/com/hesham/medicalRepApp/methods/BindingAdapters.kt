@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getFormattedDate
 import com.kizitonwose.calendar.core.daysOfWeek
+import java.util.*
 
 class BindingAdapters {
     companion object {
@@ -49,6 +50,18 @@ class BindingAdapters {
         fun getDate(view: TextView, date: String?) {
             if (date != null) {
                 view.text = getFormattedDate(date).toString()
+            }
+        }
+
+        @BindingAdapter("capitalizeName")
+        @JvmStatic
+        fun capitalizeName(view: TextView, name: String?) {
+            view.text = name?.let {
+                if (it.isNotEmpty()) {
+                    it.substring(0, 1).uppercase(Locale.ROOT) + it.substring(1)
+                } else {
+                    ""
+                }
             }
         }
 

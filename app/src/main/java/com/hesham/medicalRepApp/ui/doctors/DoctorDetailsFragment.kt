@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentDoctorDetailsBinding
 import com.hesham.medicalRepApp.databinding.FragmentDoctorsBinding
@@ -33,5 +34,8 @@ class DoctorDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.itemXml = viewModel.selectedDoctor.value
+        binding.visitButton.setOnClickListener {
+            findNavController().navigate(R.id.action_doctorDetailsFragment_to_visitFragment)
+        }
     }
 }

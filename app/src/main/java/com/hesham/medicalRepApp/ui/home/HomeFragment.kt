@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.selectedDay.observe(viewLifecycleOwner) { date ->
             daysAdapter.setSelectDay(date.date - 1)
-            val dateFormatter = SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH)
+            val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
             binding.monthPickerButton.text = dateFormatter.format(date)
             homeViewModel.getScheduledDoctorsList(date!!, homeViewModel.selectedCity.value!!)
         }

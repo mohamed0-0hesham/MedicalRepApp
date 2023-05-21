@@ -36,12 +36,12 @@ class HomeViewModel : ViewModel() {
     }
 
     fun startLocation(startPoint: GeoPoint, uid: String, time: Long) {
-        val report=ReportModel(null,uid,Date().time,formattedDateOf(time),startPoint,null,null,null)
+        val report=ReportModel(null,uid,Date().time,formattedDateOf(time,"dd-MM-yyyy"),startPoint,null,null,null)
         userRepository.startLocation(report)
     }
 
     fun endLocation(endPoint: GeoPoint, uid: String, time: Long) {
-        val report=ReportModel(null,uid,null,formattedDateOf(time),null,null,endPoint,Date().time)
+        val report=ReportModel(null,uid,null,formattedDateOf(time,"dd-MM-yyyy"),null,null,endPoint,Date().time)
         userRepository.endLocation(report)
     }
 }

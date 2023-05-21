@@ -1,8 +1,6 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 import android.app.Activity.RESULT_OK
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -16,17 +14,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentAddDoctorBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.datePicker
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
 import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
 import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
-import com.hesham.medicalRepApp.methods.Utilities.Companion.uploadToStorage
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.kizitonwose.calendar.core.daysOfWeek
 import java.util.*
@@ -109,7 +106,7 @@ class AddDoctorFragment : Fragment() {
         }
 
         binding.LastVisitBtn.setOnClickListener {
-            datePicker()
+            datePicker(selectedDate, requireContext(), binding.LastVisitBtn)
         }
 
         binding.doctorImageView.setOnClickListener {
@@ -187,40 +184,6 @@ class AddDoctorFragment : Fragment() {
             notes = binding.notes.editText!!.text.toString(),
             lastVisit = selectedDate.timeInMillis.toString()
         )
-    }
-
-    private fun datePicker() {
-        val initialYear = selectedDate.get(Calendar.YEAR)
-        val initialMonth = selectedDate.get(Calendar.MONTH)
-        val initialDay = selectedDate.get(Calendar.DAY_OF_MONTH)
-        val initialHour = selectedDate.get(Calendar.HOUR_OF_DAY)
-        val initialMinute = selectedDate.get(Calendar.MINUTE)
-
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { viewTime, hourOfDay, minute ->
-            selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            selectedDate.set(Calendar.MINUTE, minute)
-            selectedDate.timeInMillis
-            binding.LastVisitBtn.text=selectedDate.time.toString()
-        }
-        val timePickerDialog = TimePickerDialog(
-            context,
-            timeSetListener,
-            initialHour, initialMinute,
-            false
-        )
-
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { viewDate, year, month, dayOfMonth ->
-                selectedDate.set(year, month, dayOfMonth)
-                timePickerDialog.show()
-            }
-
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            dateSetListener,
-            initialYear, initialMonth, initialDay
-        )
-        datePickerDialog.show()
     }
 
     private fun selectPhoto() {

@@ -49,11 +49,19 @@
         <action
             android:id="@+id/action_doctorDetailsFragment_to_addDoctorFragment"
             app:destination="@id/addDoctorFragment" />
+        <action
+            android:id="@+id/action_doctorDetailsFragment_to_visitFragment"
+            app:destination="@id/visitFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.hesham.medicalRepApp.ui.doctors.MapFragment"
         android:label="Map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/visitFragment"
+        android:name="com.hesham.medicalRepApp.ui.doctors.VisitFragment"
+        android:label="Visit"
+        tools:layout="@layout/fragment_visit" />
 
 </navigation>
