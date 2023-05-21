@@ -24,6 +24,8 @@ import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
 import com.hesham.medicalRepApp.listeners.LocationListener
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getCurrentLocaton
+import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
+import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
 import java.text.SimpleDateFormat
@@ -84,38 +86,45 @@ class HomeFragment : Fragment() {
         homeViewModel.startedLocation.observe(viewLifecycleOwner) {
             if (it) {
                 binding.startCard.setOnClickListener {
-                    getCurrentLocaton(requireActivity(), object : LocationListener {
-                        override fun getLocation(location: Location?) {
-                            if (location != null) {
-                                val startPoint = GeoPoint(location.latitude, location.longitude)
-                                homeViewModel.endLocation(
-                                    startPoint,
-                                    currentUser!!.uid,
-                                    calendar.timeInMillis
-                                )
-                                homeViewModel.startedLocation.value = false
-                                binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
+                    if (isNetworkConnected(requireContext())) {
+                        getCurrentLocaton(requireActivity(), object : LocationListener {
+                            override fun getLocation(location: Location?) {
+                                if (location != null) {
+                                    val startPoint = GeoPoint(location.latitude, location.longitude)
+                                    homeViewModel.endLocation(
+                                        startPoint,
+                                        currentUser!!.uid,
+                                        calendar.timeInMillis
+                                    )
+                                    homeViewModel.startedLocation.value = false
+                                    binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
+                                }
                             }
-                        }
-
-                    })
+                        })
+                    } else {
+                        showNoInternetToast(requireContext())
+                    }
                 }
             } else {
                 binding.startCard.setOnClickListener {
-                    getCurrentLocaton(requireActivity(), object : LocationListener {
-                        override fun getLocation(location: Location?) {
-                            if (location != null) {
-                                val startPoint = GeoPoint(location.latitude, location.longitude)
-                                homeViewModel.startLocation(
-                                    startPoint,
-                                    currentUser!!.uid,
-                                    calendar.timeInMillis
-                                )
-                                homeViewModel.startedLocation.value = true
-                                binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
+                    if (isNetworkConnected(requireContext())) {
+                        getCurrentLocaton(requireActivity(), object : LocationListener {
+                            override fun getLocation(location: Location?) {
+                                if (location != null) {
+                                    val startPoint = GeoPoint(location.latitude, location.longitude)
+                                    homeViewModel.startLocation(
+                                        startPoint,
+                                        currentUser!!.uid,
+                                        calendar.timeInMillis
+                                    )
+                                    homeViewModel.startedLocation.value = true
+                                    binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
+                                }
                             }
-                        }
-                    })
+                        })
+                    } else {
+                        showNoInternetToast(requireContext())
+                    }
                 }
             }
         }
@@ -131,9 +140,9 @@ class HomeFragment : Fragment() {
             homeViewModel.selectedCity.value!!
         )
 
-        if (homeViewModel.startedLocation.value!!){
+        if (homeViewModel.startedLocation.value!!) {
             binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
-        }else{
+        } else {
             binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
         }
 

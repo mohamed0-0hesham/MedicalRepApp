@@ -14,6 +14,8 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -21,6 +23,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
@@ -255,6 +258,21 @@ class Utilities {
                 GEOCODER_AREA->addresses[0].subLocality
                 else -> addresses[0]
             }
+        }
+
+        fun isNetworkConnected(context: Context): Boolean {
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val network = connectivityManager.activeNetwork ?: return false
+                val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+                return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            } else {
+                val networkInfo = connectivityManager.activeNetworkInfo
+                return networkInfo != null && networkInfo.isConnected
+            }
+        }
+        fun showNoInternetToast(context: Context) {
+            Toast.makeText(context, "There is no internet connection", Toast.LENGTH_SHORT).show()
         }
     }
 }

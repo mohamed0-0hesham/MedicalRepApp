@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,8 @@ import com.google.android.material.chip.Chip
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentAddDoctorBinding
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
+import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
+import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
 import com.hesham.medicalRepApp.methods.Utilities.Companion.uploadToStorage
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.kizitonwose.calendar.core.daysOfWeek
@@ -90,7 +93,9 @@ class AddDoctorFragment : Fragment() {
 
         binding.SaveButton.setOnClickListener {
             val doctor = onSave()
-            if (doctor != null) {
+            if (!isNetworkConnected(requireContext())) {
+                showNoInternetToast(requireContext())
+            }else if(doctor != null){
                 doctor.id=doctor.name+doctor.phoneNum
                 viewModel.addDoctor(doctor,bitmap)
                 viewModel.addCity(doctor.city!!, doctor.area!!)
