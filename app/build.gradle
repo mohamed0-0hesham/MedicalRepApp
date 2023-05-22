@@ -78,4 +78,7 @@ dependencies {
 
     //carousel layout manager
     implementation 'com.mig35:carousellayoutmanager:1.4.6'
+
+    //'PreferenceManager' is deprecated. Deprecated in Java that's why i use androidx.preference dependency
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 }
