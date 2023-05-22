@@ -30,7 +30,7 @@ class LoginViewModel : ViewModel() {
     private val _loginRequestState: MutableLiveData<String> = MutableLiveData()
     val loginRequestState: LiveData<String> = _loginRequestState
 
-    private val userRepository = UserRepository()
+    private val userRepository = UserRepository.getInstance()
 
     fun createAccount(
         activity: Activity,
@@ -40,7 +40,7 @@ class LoginViewModel : ViewModel() {
         password: String
     ) {
         mActivity = activity
-        val user=UserModel(null,null,name,email,phone,null,null,null)
+        val user=UserModel(null,null,name,email,phone,null,null,null,null)
         val emailAuth = auth.createUserWithEmailAndPassword(email, password)
         emailAuth.addOnCompleteListener(activity) { task ->
             if (task.isSuccessful) {

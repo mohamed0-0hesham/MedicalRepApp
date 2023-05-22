@@ -87,6 +87,7 @@
                 android:text="Order"
                 app:icon="@drawable/order_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/visitButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/visitButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

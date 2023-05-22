@@ -14,7 +14,7 @@ import java.util.Date
 
 class HomeViewModel : ViewModel() {
     private val doctorsRepository = DoctorsRepository()
-    private val userRepository = UserRepository()
+//    private val userRepository = UserRepository.getInstance()
     val doctorList: MutableLiveData<List<DoctorModel>> = MutableLiveData()
     val selectedDay: MutableLiveData<Date> = MutableLiveData()
     val selectedCity: MutableLiveData<String> = MutableLiveData("Domiat")
@@ -32,16 +32,16 @@ class HomeViewModel : ViewModel() {
     }
 
     fun updateUser(userId:String,key:String,value:Any){
-        userRepository.updateUserData(userId,key,value)
+//        userRepository.updateUserData(userId,key,value)
     }
 
     fun startLocation(startPoint: GeoPoint, uid: String, time: Long) {
         val report=ReportModel(null,uid,Date().time,formattedDateOf(time,"dd-MM-yyyy"),startPoint,null,null,null)
-        userRepository.startLocation(report)
+//        userRepository.startLocation(report)
     }
 
     fun endLocation(endPoint: GeoPoint, uid: String, time: Long) {
         val report=ReportModel(null,uid,null,formattedDateOf(time,"dd-MM-yyyy"),null,null,endPoint,Date().time)
-        userRepository.endLocation(report)
+//        userRepository.endLocation(report)
     }
 }

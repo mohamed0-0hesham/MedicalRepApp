@@ -5,7 +5,7 @@ class VisitModel {
     var to: String? = null
     var time: String? = null
     var abstract:String?=null
-    var order: List<Int>? = null
+    var order: List<String>? = null
     var notes: String? = null
 
     constructor(){
@@ -17,7 +17,7 @@ class VisitModel {
         to: String?,
         time: String?,
         abstract: String?,
-        order: List<Int>?,
+        order: List<String>?,
         notes: String?
     ) {
         this.id = id

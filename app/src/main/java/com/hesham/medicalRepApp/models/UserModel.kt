@@ -7,10 +7,11 @@ class UserModel {
     var email: String? = null
     var phone: String? = null
     var jobTitle:String?=null
-    var area:String?=null
-    var team:String?=null
+    var cities:List<String>?=null
+    var teamId:String?=null
+    var companyId:String?=null
 
-    constructor() {
+    constructor(){
 
     }
 
@@ -21,8 +22,9 @@ class UserModel {
         email: String?,
         phone: String?,
         jobTitle: String?,
-        area: String?,
-        team: String?
+        cities: List<String>?,
+        teamId: String?,
+        companyId: String?
     ) {
         this.id = id
         this.photoUrl = photoUrl
@@ -30,8 +32,9 @@ class UserModel {
         this.email = email
         this.phone = phone
         this.jobTitle = jobTitle
-        this.area = area
-        this.team = team
+        this.cities = cities
+        this.teamId = teamId
+        this.companyId = companyId
     }
 
 }

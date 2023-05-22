@@ -20,6 +20,7 @@ import com.hesham.medicalRepApp.adapters.DaysAdapter
 import com.hesham.medicalRepApp.adapters.DoctorScheduleAdapter
 import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
+import com.hesham.medicalRepApp.data.UserRepository
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
 import com.hesham.medicalRepApp.listeners.LocationListener
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var daysAdapter: DaysAdapter
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var userRepository:UserRepository
     private val viewModel: DoctorsViewModel by activityViewModels()
     private val calendar = Calendar.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -132,6 +134,8 @@ class HomeFragment : Fragment() {
 
 
     private fun uiInit() {
+        userRepository= UserRepository.getInstance()
+
         if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
         }
