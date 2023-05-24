@@ -2,10 +2,16 @@ package com.hesham.medicalRepApp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
 import com.hesham.medicalRepApp.databinding.DoctorScheduleItemBinding
 import com.hesham.medicalRepApp.models.DoctorModel
+import com.hesham.medicalRepApp.ui.home.HomeFragment
+import org.checkerframework.common.subtyping.qual.Bottom
 
 class DoctorScheduleAdapter(private val listener: OnItemClickListener) :
     RecyclerView.Adapter<DoctorScheduleAdapter.MyViewHolder>() {
@@ -36,7 +42,10 @@ class DoctorScheduleAdapter(private val listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition, itemList[adapterPosition])
+                listener.onItemClick(bindingAdapterPosition, itemList[bindingAdapterPosition],false)
+            }
+            itemView.findViewById<Button>(R.id.visitButton).setOnClickListener {
+                listener.onItemClick(bindingAdapterPosition, itemList[bindingAdapterPosition],true)
             }
         }
     }

@@ -60,6 +60,7 @@ class Utilities {
         const val END_LOCATION_KEY = "endLocation"
         const val END_TIME_KEY = "endTime"
         const val PHOTO_URL_KEY = "photoUrl"
+        const val SHARED_DEFAULT_CITY="DefaultCity"
         const val DOCTORS_RECYCLER = "DoctorsFragment"
         const val DOCTOR_SCHEDULE = "ScheduledDoctors"
         const val LAST_VISIT = "lastVisit"

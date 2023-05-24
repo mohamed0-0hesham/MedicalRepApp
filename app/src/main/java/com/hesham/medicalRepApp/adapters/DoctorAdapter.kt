@@ -40,7 +40,7 @@ class DoctorAdapter(private val listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition, itemList[adapterPosition])
+                listener.onItemClick(bindingAdapterPosition, itemList[bindingAdapterPosition],false)
             }
         }
     }

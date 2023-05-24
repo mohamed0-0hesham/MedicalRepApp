@@ -76,12 +76,9 @@ class AddDoctorFragment : Fragment() {
         viewModel.addDoctorLocation.observe(viewLifecycleOwner){ location->
             val geoCoder=Geocoder(requireContext(), Locale.ENGLISH).getFromLocation(location[0],location[1],1)
             if (geoCoder!=null){
-                binding.autoCompleteCity.setText(geoCoder[0].adminArea?:"")
+//                binding.autoCompleteCity.setText(geoCoder[0].adminArea?:"")
                 binding.autoCompleteArea.setText(geoCoder[0].locality?:"")
-                binding.LocationBtn.apply {
-                    textSize = resources.getDimension(R.dimen.textSize8dp)
-                    text=geoCoder[0].getAddressLine(0)?:""
-                }
+                binding.addressText.text= geoCoder[0].getAddressLine(0)?:""
             }
         }
     }
@@ -153,6 +150,7 @@ class AddDoctorFragment : Fragment() {
             binding.PhoneNum,
             binding.gender,
             binding.city,
+            binding.center,
         )
         for (inputLayout in inputLayoutList) {
             if (inputLayout.editText!!.text.trim().isEmpty()) {
@@ -165,14 +163,20 @@ class AddDoctorFragment : Fragment() {
             }
         }
 
-
+        val dates = mutableListOf<Map<String, Int>>()
+        val city=binding.city.editText!!.text.toString()
+        val daysIds=binding.chipDaysGroup.checkedChipIds
+        for (day in daysIds){
+            val map=mapOf(city to day)
+            dates.add(map)
+        }
         return DoctorModel(
             "dummy",
             name = binding.addDoctorName.editText!!.text.toString().lowercase(),
             specialty = binding.specialty.editText!!.text.toString(),
             photoUrl = "",
-            phoneNum = binding.PhoneNum.editText!!.text.toString(),
-            days = binding.chipDaysGroup.checkedChipIds,
+            phoneNum = "20"+binding.PhoneNum.editText!!.text.toString(),
+            days = dates,
             gender = binding.gender.editText!!.text.toString(),
             location = location,
             visitsByMonth = binding.radioGroup.checkedRadioButtonId,

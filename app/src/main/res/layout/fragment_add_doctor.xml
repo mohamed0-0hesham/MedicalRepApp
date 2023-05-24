@@ -242,7 +242,13 @@
                     app:layout_constraintTop_toTopOf="@+id/area"
                     app:strokeColor="#BFB8B8" />
             </LinearLayout>
-
+            <TextView
+                android:id="@+id/addressText"
+                android:layout_margin="@dimen/textSize8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_location_to_show_the_address"
+                />
             <LinearLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"

@@ -7,7 +7,7 @@ class DoctorModel {
     var photoUrl:String?=null
     var phoneNum:String?=null
     var gender: String? = null
-    var days: List<Int>? = null
+    var days: List<Map<String,Int>>? = null
     var city: String? = null
     var area: String? = null
     var location: List<Double>? = null
@@ -27,7 +27,7 @@ class DoctorModel {
         specialty: String?,
         photoUrl: String?,
         phoneNum: String?,
-        days: List<Int>?,
+        days: MutableList<Map<String, Int>>,
         city: String?,
         gender: String?,
         area: String?,

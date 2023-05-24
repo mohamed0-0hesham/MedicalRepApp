@@ -3,7 +3,6 @@ package com.hesham.medicalRepApp.ui.home
 import android.app.DatePickerDialog
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -164,9 +163,13 @@ class HomeFragment : Fragment() {
         })
 
         scheduledAdapter = DoctorScheduleAdapter(object : OnItemClickListener {
-            override fun onItemClick(position: Int, doctorModel: DoctorModel) {
+            override fun onItemClick(position: Int, doctorModel: DoctorModel,visitBtn:Boolean) {
                 viewModel.selectedDoctor.value = doctorModel
-                findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
+                if (visitBtn){
+                    findNavController().navigate(R.id.action_nav_home_to_visitFragment)
+                }else{
+                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
+                }
             }
         }
         )

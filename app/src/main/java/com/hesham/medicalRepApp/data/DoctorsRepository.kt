@@ -91,8 +91,7 @@ class DoctorsRepository {
         val list: ArrayList<DoctorModel> = arrayListOf()
         db.collection(DOCTORS_COLLECTION)
             .whereLessThanOrEqualTo(LAST_VISIT, beforeTwoWeek)
-            .whereArrayContains(DOCTOR_DAYS, day)
-            .whereEqualTo(CITY, city)
+            .whereArrayContains(DOCTOR_DAYS, mapOf(city to day))
             .orderBy(LAST_VISIT)
             .limit(10)
             .addSnapshotListener { value, error ->

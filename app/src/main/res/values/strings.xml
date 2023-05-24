@@ -163,5 +163,6 @@
     <string name="feedback">Feedback</string>
     <string name="next_call_observation">Next Call Observation</string>
     <string name="add_order">Add Order</string>
+    <string name="choose_location_to_show_the_address">choose location to show the address</string>
 
 </resources>

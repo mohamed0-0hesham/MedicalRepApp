@@ -79,7 +79,7 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
         _binding = null
     }
 
-    override fun onItemClick(position: Int, doctorModel: DoctorModel) {
+    override fun onItemClick(position: Int, doctorModel: DoctorModel,visitBtn:Boolean) {
         viewModel.selectedDoctor.value = doctorModel
         findNavController().navigate(R.id.action_nav_doctors_to_doctorDetailsFragment)
     }
