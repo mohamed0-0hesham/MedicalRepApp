@@ -43,6 +43,7 @@ import com.hesham.medicalRepApp.ui.doctors.MapActivity
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 
 class Utilities {
     companion object {
@@ -59,8 +60,8 @@ class Utilities {
         const val END_LOCATION_KEY = "endLocation"
         const val END_TIME_KEY = "endTime"
         const val PHOTO_URL_KEY = "photoUrl"
-        val DOCTORS_RECYCLER = "DoctorsFragment"
-        val DOCTOR_SCHEDULE = "SCHEDULE"
+        const val DOCTORS_RECYCLER = "DoctorsFragment"
+        const val DOCTOR_SCHEDULE = "ScheduledDoctors"
         const val LAST_VISIT = "lastVisit"
         const val DOCTOR_DAYS = "days"
         const val CITY = "city"
@@ -68,6 +69,9 @@ class Utilities {
         const val GEOCODER_FULL_ADDRESS = "fullAddress"
         const val GEOCODER_CITY = "city"
         const val GEOCODER_AREA = "area"
+        const val REQUEST_CODE = 123
+        const val PICK_IMAGE_REQUEST = 1
+        const val EXTRA_DATA = "EXTRA_DATA"
 
         fun colorStatusBarIcons(window: Window, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -154,7 +158,7 @@ class Utilities {
             if (height > reqHeight || width > reqWidth) {
                 val heightRatio = height.toFloat() / reqHeight.toFloat()
                 val widthRatio = width.toFloat() / reqWidth.toFloat()
-                inSampleSize = Math.ceil(Math.min(heightRatio, widthRatio).toDouble()).toInt()
+                inSampleSize = ceil(heightRatio.coerceAtMost(widthRatio).toDouble()).toInt()
             }
 
             return inSampleSize
@@ -171,7 +175,7 @@ class Utilities {
                 uploadTask.addOnCompleteListener { task: Task<UploadTask.TaskSnapshot> ->
                     if (task.isSuccessful) {
                         Log.d("Storage", "onSuccess " + task.result)
-                        storageRef.child("images/" + doctorId).downloadUrl
+                        storageRef.child("images/$doctorId").downloadUrl
                             .addOnSuccessListener { uri ->
                                 db.collection(DOCTORS_COLLECTION)
                                     .document(doctorId)
@@ -226,7 +230,7 @@ class Utilities {
             }
         }
 
-        fun getCurrentLocaton(activity: Activity, listener: LocationListener) {
+        fun getCurrentLocation(activity: Activity, listener: LocationListener) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
             if (ContextCompat.checkSelfPermission(
                     activity,

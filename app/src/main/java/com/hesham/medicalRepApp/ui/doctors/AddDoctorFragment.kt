@@ -14,12 +14,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.hesham.medicalRepApp.R
 import com.hesham.medicalRepApp.databinding.FragmentAddDoctorBinding
+import com.hesham.medicalRepApp.methods.Utilities.Companion.EXTRA_DATA
+import com.hesham.medicalRepApp.methods.Utilities.Companion.PICK_IMAGE_REQUEST
+import com.hesham.medicalRepApp.methods.Utilities.Companion.REQUEST_CODE
 import com.hesham.medicalRepApp.methods.Utilities.Companion.datePicker
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
 import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
@@ -29,10 +33,6 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import java.util.*
 
 class AddDoctorFragment : Fragment() {
-
-    val REQUEST_CODE = 123
-    private val PICK_IMAGE_REQUEST = 1
-    private val EXTRA_DATA = "EXTRA_DATA"
     private var _binding: FragmentAddDoctorBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: DoctorsViewModel
@@ -126,7 +126,6 @@ class AddDoctorFragment : Fragment() {
                 binding.doctorImageView.setImageBitmap(bitmap)
             }
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun addChipToGroup() {
@@ -160,7 +159,7 @@ class AddDoctorFragment : Fragment() {
                 inputLayout.apply {
                     error="${inputLayout.editText!!.hint} is required"
                     boxStrokeErrorColor= ColorStateList.valueOf(resources.getColor(R.color.red))
-                    errorIconDrawable=resources.getDrawable(R.drawable.error_svgrepo_com,theme)
+                    errorIconDrawable=ResourcesCompat.getDrawable(resources,R.drawable.error_svgrepo_com,theme)
                 }
                 return null
             }

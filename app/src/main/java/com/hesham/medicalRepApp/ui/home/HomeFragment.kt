@@ -24,7 +24,7 @@ import com.hesham.medicalRepApp.data.UserRepository
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
 import com.hesham.medicalRepApp.listeners.LocationListener
-import com.hesham.medicalRepApp.methods.Utilities.Companion.getCurrentLocaton
+import com.hesham.medicalRepApp.methods.Utilities.Companion.getCurrentLocation
 import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
 import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
 import com.hesham.medicalRepApp.models.DoctorModel
@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
             if (it) {
                 binding.startCard.setOnClickListener {
                     if (isNetworkConnected(requireContext())) {
-                        getCurrentLocaton(requireActivity(), object : LocationListener {
+                        getCurrentLocation(requireActivity(), object : LocationListener {
                             override fun getLocation(location: Location?) {
                                 if (location != null) {
                                     val startPoint = GeoPoint(location.latitude, location.longitude)
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
             } else {
                 binding.startCard.setOnClickListener {
                     if (isNetworkConnected(requireContext())) {
-                        getCurrentLocaton(requireActivity(), object : LocationListener {
+                        getCurrentLocation(requireActivity(), object : LocationListener {
                             override fun getLocation(location: Location?) {
                                 if (location != null) {
                                     val startPoint = GeoPoint(location.latitude, location.longitude)

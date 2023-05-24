@@ -156,5 +156,12 @@
     <string name="visit">visit</string>
     <string name="start_location">Start Location</string>
     <string name="a_visit_to_dr">A Visit To Dr.</string>
+    <string name="status_of_the_account">Status Of The Account</string>
+    <string name="active">Active</string>
+    <string name="notactive">NotActive</string>
+    <string name="main_competitor">Main Competitor</string>
+    <string name="feedback">Feedback</string>
+    <string name="next_call_observation">Next Call Observation</string>
+    <string name="add_order">Add Order</string>
 
 </resources>

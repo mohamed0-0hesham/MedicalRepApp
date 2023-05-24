@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.doctors.VisitFragment">
+
     <data>
+
         <variable
             name="itemXml"
             type="com.hesham.medicalRepApp.models.DoctorModel" />
@@ -64,10 +66,10 @@
                     android:layout_height="wrap_content"
 
                     android:gravity="center"
-                    app:capitalizeName="@{itemXml.name}"
                     android:textColor="@color/backgroundColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    app:capitalizeName="@{itemXml.name}"
                     app:layout_constraintStart_toStartOf="@+id/aVisitTest"
                     app:layout_constraintTop_toBottomOf="@+id/aVisitTest"
                     tools:text="John Doe" />
@@ -100,8 +102,7 @@
                     android:id="@+id/visitTime"
                     style="@style/ToggleIconButton"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="@string/last_visit"
                     android:textColor="@color/colorPrimary"
@@ -114,32 +115,88 @@
                     app:layout_constraintTop_toBottomOf="@+id/profile_specialty"
                     app:strokeColor="@color/backgroundColor" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/addDoctorName"
-                    style="@style/customTextLayout"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/accountRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/a_visit_to_dr">
+                    android:orientation="horizontal"
+                    app:defaultNavHost="true"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    tools:listitem="@layout/clinic_visit_item" />
 
 
-                    <com.google.android.material.textfield.TextInputEditText
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/textSize8dp"
+                        android:text="@string/status_of_the_account"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/textSize8dp"
+                        android:buttonTint="@color/darkGray"
+                        android:text="@string/active"
+                        android:lines="1"
+                        android:textColor="@color/darkGray"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/red"
+                        android:checked="true"
+                        android:text="@string/notactive"
+                        android:textColor="@color/red"
+                        android:textSize="16sp"
+                        android:lines="1" />
+
+                </RadioGroup>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/Products"
+                    style="@style/customExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/products">
+
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:singleLine="true"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        android:singleLine="true" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/ProductsGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/specialty"
-                    style="@style/customTextLayout"
+                    android:id="@+id/competitorInput"
+                    style="@style/customExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/specialty">
+                    android:hint="@string/main_competitor">
 
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/autoCompleteCompetitor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -147,20 +204,19 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/PhoneNum"
+                    android:id="@+id/feedbackText"
                     style="@style/customTextLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/phone_number"
-                    app:prefixText="+20"
-                    app:startIconDrawable="@drawable/ic_baseline_phone_24">
+                    android:hint="@string/feedback">
 
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:singleLine="true"
                         tools:ignore="TouchTargetSizeCheck" />
 
@@ -177,48 +233,7 @@
                     android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/city"
-                        style="@style/customExposedDropdownMenu"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/textSize8dp"
-                        android:layout_weight="2"
-                        android:hint="@string/city">
-
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/autoCompleteCity"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="alexandrie" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/gender"
-                        style="@style/customExposedDropdownMenu"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/gender"
-                        app:helperTextTextColor="@color/red">
-
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/autoCompleteGender"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="male" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout4"
@@ -226,63 +241,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/center"
-                        style="@style/customExposedDropdownMenu"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="2"
-                        android:hint="@string/center"
-                        app:layout_constraintEnd_toStartOf="@+id/textView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="alexandrie" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
-
-                        <RadioButton
-                            android:id="@+id/radio1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:checked="true"
-                            android:text="@string/_1" />
-
-                        <RadioButton
-                            android:id="@+id/radio2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/_2" />
-
-                    </RadioGroup>
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/visits_par_month"
-                        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-                        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -319,62 +277,21 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:padding="0dp"
-                        android:text="@string/choose_location"
-                        android:textColor="@color/black"
+                        android:text="@string/add_order"
                         app:cornerRadius="10dp"
-                        app:icon="@drawable/ic_baseline_location_on_24"
-                        app:iconTint="@color/black"
+                        app:icon="@drawable/order_icon"
                         app:layout_constraintBottom_toBottomOf="@+id/area"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/area"
-                        app:strokeColor="#BFB8B8" />
+                        app:strokeColor="@color/colorPrimary" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/Products"
-                        style="@style/customExposedDropdownMenu"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="2"
-                        android:hint="@string/products">
-
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="alexandrie" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                </LinearLayout>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/ProductsGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                    app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/notes"
+                    android:id="@+id/nextCallText"
                     style="@style/customTextLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/notes">
-
+                    android:hint="@string/next_call_observation">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -391,8 +308,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/save"
-                    android:textColor="@color/black"
-                    app:strokeColor="#9E9E9E"
+                    app:strokeColor="@color/gray"
                     app:strokeWidth="1dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

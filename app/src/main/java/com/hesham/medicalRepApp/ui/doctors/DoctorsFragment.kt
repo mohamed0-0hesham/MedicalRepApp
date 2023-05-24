@@ -67,7 +67,9 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
         if (!queryText.isNullOrBlank()){
             viewModel.getSearchDoctorList(queryText.toString())
         }else{
-            myAdapter.setData(viewModel.doctorList.value!!)
+            if (viewModel.doctorList.value!=null){
+                myAdapter.setData(viewModel.doctorList.value!!)
+            }
         }
         return true
     }

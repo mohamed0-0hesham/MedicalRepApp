@@ -3,7 +3,9 @@ package com.hesham.medicalRepApp.data
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,10 +26,11 @@ class UserRepository private constructor(
 ) {
     private var db = FirebaseFirestore.getInstance()
     private var mAuth = FirebaseAuth.getInstance()
+    private val authCurrentUser = mAuth.currentUser
     private var storage: FirebaseStorage? = FirebaseStorage.getInstance()
     private var storageRef: StorageReference? = storage!!.reference
     private val fireAuthUser = FirebaseAuth.getInstance().currentUser
-    private var currentUser: UserModel? = null
+    var currentUser: UserModel? = null
 //    private var applicationContext = mContext.applicationContext
 
     companion object {
@@ -46,6 +49,29 @@ class UserRepository private constructor(
         }
     }
 
+     fun setProfileUpdatesRequest(name: String?, imgUrl: String?) {
+        val profileUpdatesRequest = UserProfileChangeRequest.Builder()
+        if (!name.isNullOrBlank() || !imgUrl.isNullOrBlank()) {
+            if (!name.isNullOrBlank()) {
+                profileUpdatesRequest.displayName = name
+            }
+            if (!imgUrl.isNullOrBlank()) {
+                profileUpdatesRequest.photoUri = imgUrl.toUri()
+            }
+            val profileUpdates = profileUpdatesRequest.build()
+            authCurrentUser?.updateProfile(profileUpdates)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("Test", "User name updated.")
+                        Log.d("Test", "User name is ${authCurrentUser.displayName}")
+
+                    } else {
+                        Log.d("Test", "isNotSuccessful ${task.exception?.message}")
+                    }
+                }
+        }
+    }
+
     fun saveUserData(user: UserModel) {
         db.collection(USERS_COLLECTION)
             .document(user.id!!)
@@ -58,7 +84,7 @@ class UserRepository private constructor(
             .update(mapOf(key to value))
     }
 
-    private fun getLiveCurrentUserData(userId: String) {
+     fun getLiveCurrentUserData(userId: String) {
         db.collection(USERS_COLLECTION)
             .document(userId)
             .addSnapshotListener(EventListener { value, error ->
@@ -67,7 +93,7 @@ class UserRepository private constructor(
                 } else if (value != null) {
                     currentUser = value.toObject(UserModel::class.java)
                 } else {
-
+                    Log.e("test " + javaClass.name, "there isn't profile for the currentUser")
                 }
             })
     }

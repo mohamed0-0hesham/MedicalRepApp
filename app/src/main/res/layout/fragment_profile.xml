@@ -12,25 +12,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryVariant"
         tools:context=".ui.doctors.DoctorDetailsFragment">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/textSize8dp"
-            android:padding="16dp"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryVariant"
+                android:background="@drawable/nav_header_background"
                 android:orientation="vertical"
-                android:padding="@dimen/textSize8dp"
+                android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -45,22 +35,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/RoundedImageView"
+                    app:shapeAppearanceOverlay="@style/circleImageView"
                     tools:srcCompat="@tools:sample/avatars" />
-
 
                 <TextView
                     android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="8dp"
                     android:gravity="center"
                     android:textColor="@color/backgroundColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:capitalizeName="@{itemXml.name}"
-                    app:layout_constraintEnd_toEndOf="@+id/profile_image"
-                    app:layout_constraintStart_toStartOf="@+id/profile_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profile_image"
                     tools:text="John Doe" />
 
@@ -68,7 +57,6 @@
                     android:id="@+id/profile_specialty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:gravity="center"
                     android:text="@{itemXml.jobTitle}"
                     android:textColor="@color/backgroundColor"
@@ -78,9 +66,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/profile_name"
                     tools:text="Software Engineer" />
 
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{itemXml.email}"
+                    android:textColor="@color/backgroundColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_specialty"
+                    app:layout_constraintStart_toStartOf="@+id/profile_specialty"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_specialty"
+                    tools:text="Software Engineer" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
