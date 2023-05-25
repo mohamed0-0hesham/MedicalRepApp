@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="itemXml"
             type="com.hesham.medicalRepApp.models.DoctorModel" />
@@ -16,6 +15,7 @@
         tools:context=".ui.doctors.DoctorDetailsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
@@ -48,10 +48,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                app:capitalizeName="@{itemXml.name}"
                 android:textColor="@color/backgroundColor"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                app:capitalizeName="@{itemXml.name}"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="@+id/profile_image"
                 tools:text="John Doe" />
@@ -91,6 +91,18 @@
                 app:layout_constraintStart_toEndOf="@+id/visitButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/clinicRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:spanCount="1"
+            tools:listitem="@layout/clinic_visit_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

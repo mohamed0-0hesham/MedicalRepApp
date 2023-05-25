@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,8 @@ import com.hesham.medicalRepApp.methods.Utilities.Companion.datePicker
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getBitmapFromUri
 import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
 import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
+import com.hesham.medicalRepApp.models.DoctorClinic
+import com.hesham.medicalRepApp.models.DoctorForCompany
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.kizitonwose.calendar.core.daysOfWeek
 import java.util.*
@@ -38,7 +41,8 @@ class AddDoctorFragment : Fragment() {
     lateinit var viewModel: DoctorsViewModel
     private var location: List<Double>? = null
     private val selectedDate = Calendar.getInstance()
-    private var bitmap:Bitmap?=null
+    private var bitmap: Bitmap? = null
+    private var doctorCompany: DoctorForCompany? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,26 +77,33 @@ class AddDoctorFragment : Fragment() {
         val specialtiesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, specialties)
         binding.specialtyAutoCompleteText.setAdapter(specialtiesAdapter)
 
-        viewModel.addDoctorLocation.observe(viewLifecycleOwner){ location->
-            val geoCoder=Geocoder(requireContext(), Locale.ENGLISH).getFromLocation(location[0],location[1],1)
-            if (geoCoder!=null){
+        viewModel.addDoctorLocation.observe(viewLifecycleOwner) { location ->
+            try {
+                val geoCoder = Geocoder(requireContext(), Locale.ENGLISH).getFromLocation(
+                    location[0],
+                    location[1],
+                    1
+                )
+                if (geoCoder != null) {
 //                binding.autoCompleteCity.setText(geoCoder[0].adminArea?:"")
-                binding.autoCompleteArea.setText(geoCoder[0].locality?:"")
-                binding.addressText.text= geoCoder[0].getAddressLine(0)?:""
+                    binding.autoCompleteArea.setText(geoCoder[0].locality ?: "")
+                    binding.addressText.text = geoCoder[0].getAddressLine(0) ?: ""
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun onClickButtons() {
-
         binding.SaveButton.setOnClickListener {
             val doctor = onSave()
             if (!isNetworkConnected(requireContext())) {
                 showNoInternetToast(requireContext())
-            }else if(doctor != null){
-                doctor.id=doctor.name+doctor.phoneNum
-                viewModel.addDoctor(doctor,bitmap)
-                viewModel.addCity(doctor.city!!, doctor.area!!)
+            } else if (doctor != null) {
+                doctor.id = doctor.name + doctor.phoneNum
+                viewModel.addDoctor(doctor, bitmap, doctorCompany!!)
+//                viewModel.addCity(doctor.city!!, doctor.area!!)
                 findNavController().navigateUp()
             }
         }
@@ -119,7 +130,8 @@ class AddDoctorFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
             if (selectedImageUri != null) {
-                bitmap =getBitmapFromUri(selectedImageUri, requireActivity().contentResolver, 500, 500)
+                bitmap =
+                    getBitmapFromUri(selectedImageUri, requireActivity().contentResolver, 500, 500)
                 binding.doctorImageView.setImageBitmap(bitmap)
             }
         }
@@ -155,37 +167,55 @@ class AddDoctorFragment : Fragment() {
         for (inputLayout in inputLayoutList) {
             if (inputLayout.editText!!.text.trim().isEmpty()) {
                 inputLayout.apply {
-                    error="${inputLayout.editText!!.hint} is required"
-                    boxStrokeErrorColor= ColorStateList.valueOf(resources.getColor(R.color.red))
-                    errorIconDrawable=ResourcesCompat.getDrawable(resources,R.drawable.error_svgrepo_com,theme)
+                    error = "${inputLayout.editText!!.hint} is required"
+                    boxStrokeErrorColor = ColorStateList.valueOf(resources.getColor(R.color.red))
+                    errorIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.error_svgrepo_com, theme)
                 }
                 return null
             }
         }
 
         val dates = mutableListOf<Map<String, Int>>()
-        val city=binding.city.editText!!.text.toString()
-        val daysIds=binding.chipDaysGroup.checkedChipIds
-        for (day in daysIds){
-            val map=mapOf(city to day)
+        val city = binding.city.editText!!.text.toString()
+        val daysIds = binding.chipDaysGroup.checkedChipIds
+        for (day in daysIds) {
+            val map = mapOf(city to day)
             dates.add(map)
         }
+        val clinic = DoctorClinic(
+            center = binding.center.editText!!.text.toString(),
+            days = binding.chipDaysGroup.checkedChipIds,
+            location = location,
+            city = binding.city.editText!!.text.toString(),
+            area = binding.area.editText!!.text.toString()
+        )
+        val clinics = listOf(clinic)
+
+        doctorCompany = DoctorForCompany(
+            doctorId = "dummy",
+            days = dates,
+            doctorData = null,
+            visitsByMonth = binding.radioGroup.checkedRadioButtonId,
+            lastVisit = selectedDate.timeInMillis,
+            products = null,
+            notes = binding.notes.editText?.text.toString(),
+            visitsList = null,
+            orderList = null,
+            clinics = null,
+            lastState = null,
+            totalYearOrders = null
+        )
+
         return DoctorModel(
-            "dummy",
+            id = "dummy",
             name = binding.addDoctorName.editText!!.text.toString().lowercase(),
             specialty = binding.specialty.editText!!.text.toString(),
             photoUrl = "",
-            phoneNum = "20"+binding.PhoneNum.editText!!.text.toString(),
+            phoneNum = "20" + binding.PhoneNum.editText!!.text.toString(),
             days = dates,
             gender = binding.gender.editText!!.text.toString(),
-            location = location,
-            visitsByMonth = binding.radioGroup.checkedRadioButtonId,
-            city = binding.city.editText!!.text.toString(),
-            area = binding.area.editText!!.text.toString(),
-            center = binding.center.editText!!.text.toString(),
-            products = binding.ProductsGroup.checkedChipIds,
-            notes = binding.notes.editText!!.text.toString(),
-            lastVisit = selectedDate.timeInMillis.toString()
+            clinics = clinics,
         )
     }
 

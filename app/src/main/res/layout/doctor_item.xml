@@ -59,7 +59,7 @@
                 android:layout_below="@+id/nameView"
                 android:layout_alignStart="@+id/nameView"
                 android:paddingEnd="10dp"
-                android:text="@{itemXml.area}"
+                android:text="@{itemXml.clinics[0].area}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toBottomOf="@+id/city"
                 app:layout_constraintStart_toStartOf="@+id/textView5"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nameView"
                 android:layout_alignStart="@+id/nameView"
-                android:text="@{itemXml.city}"
+                android:text="@{itemXml.clinics[0].city}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toEndOf="@+id/area"
                 app:layout_constraintTop_toBottomOf="@+id/nameView"
@@ -86,7 +86,6 @@
                 android:layout_below="@+id/nameView"
                 android:layout_alignParentEnd="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-
                 app:layout_constraintStart_toStartOf="@+id/area"
                 app:layout_constraintTop_toBottomOf="@+id/area"
                 tools:text="SUN-MON" />
@@ -98,7 +97,7 @@
                 android:layout_below="@+id/nameView"
                 android:layout_alignParentEnd="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                app:getDate="@{itemXml.lastVisit}"
+                android:text="@{itemXml.specialty}"
                 app:layout_constraintBottom_toBottomOf="@+id/daysView"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="SUN-MON" />

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.hesham.medicalRepApp.adapters.ClinicsAdapter
 import com.hesham.medicalRepApp.databinding.FragmentVisitBinding
 import com.hesham.medicalRepApp.methods.Utilities.Companion.datePicker
 import com.hesham.medicalRepApp.methods.Utilities.Companion.formattedDateOf
@@ -15,6 +16,7 @@ class VisitFragment : Fragment() {
     private var _binding: FragmentVisitBinding? = null
     private val binding get() = _binding!!
     private  val viewModel: DoctorsViewModel by activityViewModels()
+    private lateinit var clinicsAdapter: ClinicsAdapter
     private var calendar=Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,9 @@ class VisitFragment : Fragment() {
     private fun uiInit() {
         binding.itemXml = viewModel.selectedDoctor.value
         binding.visitTime.text = "At ${formattedDateOf(calendar.timeInMillis,"h:mm a dd MMM yyyy")}"
+        clinicsAdapter = ClinicsAdapter(requireContext())
+        binding.clinicRecycler.adapter =clinicsAdapter
+        clinicsAdapter.setData(viewModel.selectedDoctor.value!!.clinics!!)
     }
 
     private fun onClickButtons() {

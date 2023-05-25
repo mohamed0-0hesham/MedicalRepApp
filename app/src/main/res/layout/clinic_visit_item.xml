@@ -12,6 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:layout_margin="10dp"
         app:cardCornerRadius="25dp">
 
@@ -29,7 +30,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Mohamed Ali" />
+                tools:text="Private clinic" />
 
             <TextView
                 android:id="@+id/area"

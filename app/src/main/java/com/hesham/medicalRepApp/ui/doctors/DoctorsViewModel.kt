@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hesham.medicalRepApp.data.DoctorsRepository
 import com.hesham.medicalRepApp.listeners.DoctorsListener
+import com.hesham.medicalRepApp.models.DoctorForCompany
 import com.hesham.medicalRepApp.models.DoctorModel
 
 class DoctorsViewModel : ViewModel() {
@@ -17,8 +18,8 @@ class DoctorsViewModel : ViewModel() {
     val selectedDoctor: MutableLiveData<DoctorModel> = MutableLiveData()
     val addDoctorLocation: MutableLiveData<List<Double>> = MutableLiveData()
 
-    fun addDoctor(doctorModel: DoctorModel, bitmap: Bitmap?) {
-        repository.addDoctor(doctorModel,bitmap)
+    fun addDoctor(doctorModel: DoctorModel, bitmap: Bitmap?, doctorCompany:DoctorForCompany) {
+        repository.addDoctor(doctorModel,bitmap, doctorCompany)
     }
 
     fun addCity(city: String, area: String) {

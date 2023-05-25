@@ -19,6 +19,7 @@ import com.hesham.medicalRepApp.adapters.DaysAdapter
 import com.hesham.medicalRepApp.adapters.DoctorScheduleAdapter
 import com.hesham.medicalRepApp.adapters.listener.OnDayItemClickListener
 import com.hesham.medicalRepApp.adapters.listener.OnItemClickListener
+import com.hesham.medicalRepApp.adapters.listener.OnSucheduleClickListener
 import com.hesham.medicalRepApp.data.UserRepository
 import com.hesham.medicalRepApp.databinding.CalendarDayLayoutBinding
 import com.hesham.medicalRepApp.databinding.FragmentHomeBinding
@@ -26,6 +27,7 @@ import com.hesham.medicalRepApp.listeners.LocationListener
 import com.hesham.medicalRepApp.methods.Utilities.Companion.getCurrentLocation
 import com.hesham.medicalRepApp.methods.Utilities.Companion.isNetworkConnected
 import com.hesham.medicalRepApp.methods.Utilities.Companion.showNoInternetToast
+import com.hesham.medicalRepApp.models.DoctorForCompany
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
 import java.text.SimpleDateFormat
@@ -162,18 +164,18 @@ class HomeFragment : Fragment() {
             }
         })
 
-        scheduledAdapter = DoctorScheduleAdapter(object : OnItemClickListener {
-            override fun onItemClick(position: Int, doctorModel: DoctorModel,visitBtn:Boolean) {
-                viewModel.selectedDoctor.value = doctorModel
-                if (visitBtn){
-                    findNavController().navigate(R.id.action_nav_home_to_visitFragment)
-                }else{
-                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
-                }
-            }
-        }
-        )
-        binding.scheduleRecycler.adapter = scheduledAdapter
+//        scheduledAdapter = DoctorScheduleAdapter(object : OnSucheduleClickListener {
+//            override fun onItemClick(position: Int, doctorModel: DoctorForCompany,visitBtn:Boolean) {
+//                viewModel.selectedDoctor.value = doctorModel
+//                if (visitBtn){
+//                    findNavController().navigate(R.id.action_nav_home_to_visitFragment)
+//                }else{
+//                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
+//                }
+//            }
+//        }
+//        )
+//        binding.scheduleRecycler.adapter = scheduledAdapter
 
         binding.monthPickerButton.setOnClickListener {
             datePicker()

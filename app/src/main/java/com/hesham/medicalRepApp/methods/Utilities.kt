@@ -52,6 +52,7 @@ class Utilities {
         val storageRef = storage.reference
         private const val LOCATION_REQUEST_CODE = 100
         const val DOCTORS_COLLECTION = "Doctors"
+        const val COMPANIES_COLLECTION = "Companies"
         const val USERS_COLLECTION = "Users"
         const val VISITS_COLLECTION = "Visits"
         const val REPORTS_COLLECTION = "Reports"
@@ -73,6 +74,7 @@ class Utilities {
         const val REQUEST_CODE = 123
         const val PICK_IMAGE_REQUEST = 1
         const val EXTRA_DATA = "EXTRA_DATA"
+        const val COMPANY_ID ="C8u71DrgPckzEw8yn6FI"
 
         fun colorStatusBarIcons(window: Window, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -1,27 +1,21 @@
 package com.hesham.medicalRepApp.ui.doctors
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.hesham.medicalRepApp.R
+import com.hesham.medicalRepApp.adapters.ClinicsAdapter
 import com.hesham.medicalRepApp.databinding.FragmentDoctorDetailsBinding
-import com.hesham.medicalRepApp.databinding.FragmentDoctorsBinding
-import kotlin.math.log
 
 class DoctorDetailsFragment : Fragment() {
     private var _binding: FragmentDoctorDetailsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var clinicsAdapter: ClinicsAdapter
     private  val viewModel: DoctorsViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,5 +31,11 @@ class DoctorDetailsFragment : Fragment() {
         binding.visitButton.setOnClickListener {
             findNavController().navigate(R.id.action_doctorDetailsFragment_to_visitFragment)
         }
+        initUi()
+    }
+    private fun initUi(){
+        clinicsAdapter = ClinicsAdapter(requireContext())
+        binding.clinicRecycler.adapter =clinicsAdapter
+        clinicsAdapter.setData(viewModel.selectedDoctor.value!!.clinics!!)
     }
 }
