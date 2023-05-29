@@ -97,26 +97,22 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/clinicRecycler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
                     app:spanCount="1"
                     tools:listitem="@layout/clinic_visit_item" />
 
@@ -125,11 +121,9 @@
                     android:background="@drawable/add_square_svgrepo_com"
                     android:backgroundTint="@color/gray"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
-        </ScrollView>
+        </HorizontalScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

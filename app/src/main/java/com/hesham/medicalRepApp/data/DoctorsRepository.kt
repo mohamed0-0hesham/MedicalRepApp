@@ -108,14 +108,18 @@ class DoctorsRepository {
             .addSnapshotListener { value, error ->
                 list.clear()
                 if (error == null) {
+                    if (value==null||value.isEmpty){
+                        Log.i("Test", "doctor ")
+                        listener.getScheduleDoctors(list)
+                    }
                     for (doc in value!!) {
                         val doctor = doc.toObject(DoctorForCompany::class.java)
                         Log.i("Test", "doctor $doctor")
-//                        Log.i("Test", "doc ${value.toString()}")
                         db.collection(DOCTORS_COLLECTION).document(doctor.doctorId!!).get()
-                            .addOnCompleteListener { task->
-                                if (task.isSuccessful){
-                                    doctor.doctorData=task.result.toObject(DoctorModel::class.java)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    doctor.doctorData =
+                                        task.result.toObject(DoctorModel::class.java)
                                     Log.i("Test", "after doctor $doctor")
                                     list.add(doctor)
                                     listener.getScheduleDoctors(list)
@@ -123,7 +127,6 @@ class DoctorsRepository {
                             }
                         Log.i("Test", "getScheduledDoctors error == null")
                     }
-//                    DoctorsViewModel().doctorList.value = list
                 }
                 Log.i("Test", "getScheduledDoctors error =" + error?.message)
             }
@@ -131,9 +134,17 @@ class DoctorsRepository {
 
 
     fun addClinic(clinic: DoctorClinic) {
+        val list = mutableListOf<Map<String,Int>>()
+        for (day in clinic.days!!){
+            list.add(mapOf(clinic.city!! to day))
+        }
+        val updates = mapOf(
+            CLINICS_KEY to FieldValue.arrayUnion(clinic),
+            DOCTOR_DAYS to FieldValue.arrayUnion(list)
+        )
         db.collection(DOCTORS_COLLECTION)
             .document(clinic.doctorId!!)
-            .update(CLINICS_KEY, FieldValue.arrayUnion(clinic))
+            .update(updates)
     }
 
     fun addCity(city: String, area: String) {

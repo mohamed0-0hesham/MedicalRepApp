@@ -54,11 +54,13 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         uiInit()
         observe()
+        onClick()
         return root
     }
 
     private fun observe() {
         homeViewModel.scheduleDoctorsList.observe(viewLifecycleOwner) { list ->
+            binding.progressBar.visibility=View.GONE
             scheduledAdapter.setData(list)
         }
 
@@ -66,6 +68,7 @@ class HomeFragment : Fragment() {
             daysAdapter.setSelectDay(date.date - 1)
             val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
             binding.monthPickerButton.text = dateFormatter.format(date)
+            binding.progressBar.visibility=View.VISIBLE
             homeViewModel.getScheduledDoctorsList(date!!, homeViewModel.selectedCity.value!!)
         }
 
@@ -256,5 +259,14 @@ class HomeFragment : Fragment() {
             initialYear, initialMonth, initialDay
         )
         datePickerDialog.show()
+    }
+
+    private fun onClick(){
+        binding.AddVisitCard.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_home_to_nav_doctors)
+        }
+        binding.AddOrderCard.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_home_to_nav_doctors)
+        }
     }
 }

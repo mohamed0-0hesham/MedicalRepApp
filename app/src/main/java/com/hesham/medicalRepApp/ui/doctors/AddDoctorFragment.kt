@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -38,7 +40,7 @@ import java.util.*
 class AddDoctorFragment : Fragment() {
     private var _binding: FragmentAddDoctorBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: DoctorsViewModel
+    private val viewModel: DoctorsViewModel by activityViewModels()
     private var location: List<Double>? = null
     private val selectedDate = Calendar.getInstance()
     private var bitmap: Bitmap? = null
@@ -52,7 +54,6 @@ class AddDoctorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[DoctorsViewModel::class.java]
         _binding = FragmentAddDoctorBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,11 +63,11 @@ class AddDoctorFragment : Fragment() {
         uiInit()
         onClickButtons()
         if (viewModel.addClinic.value!!) {
-            binding.doctorImageView.visibility = View.INVISIBLE
-            binding.addDoctorName.visibility = View.INVISIBLE
-            binding.specialty.visibility = View.INVISIBLE
-            binding.gender.visibility = View.INVISIBLE
-            binding.productsText.visibility = View.INVISIBLE
+            binding.doctorImageView.visibility = View.GONE
+            binding.addDoctorName.visibility = View.GONE
+            binding.specialty.visibility = View.GONE
+            binding.gender.visibility = View.GONE
+            binding.productsText.visibility = View.GONE
         }
     }
 

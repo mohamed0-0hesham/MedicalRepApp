@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:context=".ui.home.HomeFragment">
 
 
@@ -67,21 +67,21 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:focusedByDefault="true"
                 android:hint="@string/city"
                 android:paddingBottom="5dp"
                 android:visibility="invisible"
-                android:focusedByDefault="true"
-                app:startIconTint="@color/colorPrimary"
-                app:hintTextColor="@color/colorPrimary"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusBottomStart="15dp"
                 app:boxCornerRadiusTopEnd="15dp"
                 app:boxCornerRadiusTopStart="15dp"
+                app:hintTextColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:startIconDrawable="@drawable/ic_baseline_location_on_24">
+                app:startIconDrawable="@drawable/ic_baseline_location_on_24"
+                app:startIconTint="@color/colorPrimary">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/autoCompleteCity"
@@ -283,5 +283,19 @@
             app:layout_constraintTop_toBottomOf="@+id/text_home"
             app:spanCount="1"
             tools:listitem="@layout/doctor_schedule_item" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorPrimaryVariant"
+            android:secondaryProgressTint="@color/colorPrimaryVariant"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
