@@ -37,5 +37,9 @@ class DoctorDetailsFragment : Fragment() {
         clinicsAdapter = ClinicsAdapter(requireContext())
         binding.clinicRecycler.adapter =clinicsAdapter
         clinicsAdapter.setData(viewModel.selectedDoctor.value!!.clinics!!)
+        binding.AddClinicBtn.setOnClickListener {
+            viewModel.addClinic.value=true
+            findNavController().navigate(R.id.action_doctorDetailsFragment_to_addDoctorFragment)
+        }
     }
 }

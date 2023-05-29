@@ -49,6 +49,7 @@ class DoctorsFragment : Fragment(), OnItemClickListener {
             }
         }
         binding.DoctorAddButton.setOnClickListener {
+            viewModel.addClinic.value=false
             findNavController().navigate(R.id.action_nav_doctors_to_addDoctorFragment)
         }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

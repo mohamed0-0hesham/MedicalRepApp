@@ -61,6 +61,13 @@ class AddDoctorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         uiInit()
         onClickButtons()
+        if (viewModel.addClinic.value!!) {
+            binding.doctorImageView.visibility = View.INVISIBLE
+            binding.addDoctorName.visibility = View.INVISIBLE
+            binding.specialty.visibility = View.INVISIBLE
+            binding.gender.visibility = View.INVISIBLE
+            binding.productsText.visibility = View.INVISIBLE
+        }
     }
 
     private fun uiInit() {
@@ -97,14 +104,23 @@ class AddDoctorFragment : Fragment() {
 
     private fun onClickButtons() {
         binding.SaveButton.setOnClickListener {
-            val doctor = onSave()
-            if (!isNetworkConnected(requireContext())) {
-                showNoInternetToast(requireContext())
-            } else if (doctor != null) {
-                doctor.id = doctor.name + doctor.phoneNum
-                viewModel.addDoctor(doctor, bitmap, doctorCompany!!)
-//                viewModel.addCity(doctor.city!!, doctor.area!!)
-                findNavController().navigateUp()
+            if (!viewModel.addClinic.value!!) {
+                val doctor = onSave()
+                if (!isNetworkConnected(requireContext())) {
+                    showNoInternetToast(requireContext())
+                } else if (doctor != null) {
+                    doctor.id = doctor.name + doctor.phoneNum
+                    viewModel.addDoctor(doctor, bitmap, doctorCompany!!)
+                    findNavController().navigateUp()
+                }
+            }else{
+                val clinic = onSaveClinic()
+                if (!isNetworkConnected(requireContext())) {
+                    showNoInternetToast(requireContext())
+                } else if (clinic != null) {
+                    viewModel.addClinic(clinic)
+                    findNavController().navigateUp()
+                }
             }
         }
 
@@ -184,6 +200,7 @@ class AddDoctorFragment : Fragment() {
             dates.add(map)
         }
         val clinic = DoctorClinic(
+            doctorId = "dummy",
             center = binding.center.editText!!.text.toString(),
             days = binding.chipDaysGroup.checkedChipIds,
             location = location,
@@ -216,6 +233,21 @@ class AddDoctorFragment : Fragment() {
             days = dates,
             gender = binding.gender.editText!!.text.toString(),
             clinics = clinics,
+        )
+    }
+
+
+    private fun onSaveClinic(): DoctorClinic {
+        val inputLayoutList = arrayListOf(
+            binding.center,
+        )
+        return DoctorClinic(
+            doctorId = viewModel.selectedDoctor.value!!.id,
+            center = binding.center.editText!!.text.toString(),
+            days = binding.chipDaysGroup.checkedChipIds,
+            location = location,
+            city = binding.city.editText!!.text.toString(),
+            area = binding.area.editText!!.text.toString()
         )
     }
 

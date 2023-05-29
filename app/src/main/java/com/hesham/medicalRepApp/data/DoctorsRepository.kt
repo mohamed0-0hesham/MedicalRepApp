@@ -3,17 +3,19 @@ package com.hesham.medicalRepApp.data
 import android.graphics.Bitmap
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hesham.medicalRepApp.listeners.DoctorsListener
 import com.hesham.medicalRepApp.listeners.ScheduleDoctorsListener
 import com.hesham.medicalRepApp.methods.Utilities
-import com.hesham.medicalRepApp.methods.Utilities.Companion.CLINICS_COLLECTION
+import com.hesham.medicalRepApp.methods.Utilities.Companion.CLINICS_KEY
 import com.hesham.medicalRepApp.methods.Utilities.Companion.COMPANIES_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.COMPANY_ID
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTORS_COLLECTION
 import com.hesham.medicalRepApp.methods.Utilities.Companion.DOCTOR_DAYS
 import com.hesham.medicalRepApp.methods.Utilities.Companion.LAST_VISIT
 import com.hesham.medicalRepApp.methods.Utilities.Companion.NAME_KEY
+import com.hesham.medicalRepApp.models.DoctorClinic
 import com.hesham.medicalRepApp.models.DoctorForCompany
 import com.hesham.medicalRepApp.models.DoctorModel
 import com.hesham.medicalRepApp.ui.doctors.DoctorsViewModel
@@ -91,7 +93,7 @@ class DoctorsRepository {
 
     fun getScheduledDoctors(
         listener: ScheduleDoctorsListener,
-        beforeTwoWeek: String,
+        beforeTwoWeek: Long,
         day: Int,
         city: String
     ) {
@@ -109,6 +111,7 @@ class DoctorsRepository {
                     for (doc in value!!) {
                         val doctor = doc.toObject(DoctorForCompany::class.java)
                         Log.i("Test", "doctor $doctor")
+//                        Log.i("Test", "doc ${value.toString()}")
                         db.collection(DOCTORS_COLLECTION).document(doctor.doctorId!!).get()
                             .addOnCompleteListener { task->
                                 if (task.isSuccessful){
@@ -124,6 +127,13 @@ class DoctorsRepository {
                 }
                 Log.i("Test", "getScheduledDoctors error =" + error?.message)
             }
+    }
+
+
+    fun addClinic(clinic: DoctorClinic) {
+        db.collection(DOCTORS_COLLECTION)
+            .document(clinic.doctorId!!)
+            .update(CLINICS_KEY, FieldValue.arrayUnion(clinic))
     }
 
     fun addCity(city: String, area: String) {

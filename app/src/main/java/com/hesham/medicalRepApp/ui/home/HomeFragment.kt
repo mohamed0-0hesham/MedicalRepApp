@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var daysAdapter: DaysAdapter
     private lateinit var scheduledAdapter: DoctorScheduleAdapter
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var userRepository:UserRepository
+    private lateinit var userRepository: UserRepository
     private val viewModel: DoctorsViewModel by activityViewModels()
     private val calendar = Calendar.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
-        homeViewModel.doctorList.observe(viewLifecycleOwner) { list ->
+        homeViewModel.scheduleDoctorsList.observe(viewLifecycleOwner) { list ->
             scheduledAdapter.setData(list)
         }
 
@@ -101,6 +101,7 @@ class HomeFragment : Fragment() {
                                     )
                                     homeViewModel.startedLocation.value = false
                                     binding.startCard.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
+                                    binding.startTextView.text="Start Location"
                                 }
                             }
                         })
@@ -122,6 +123,7 @@ class HomeFragment : Fragment() {
                                     )
                                     homeViewModel.startedLocation.value = true
                                     binding.startCard.setCardBackgroundColor(resources.getColor(R.color.red))
+                                    binding.startTextView.text="End Location"
                                 }
                             }
                         })
@@ -135,7 +137,7 @@ class HomeFragment : Fragment() {
 
 
     private fun uiInit() {
-        userRepository= UserRepository.getInstance()
+        userRepository = UserRepository.getInstance()
 
         if (homeViewModel.selectedDay.value == null) {
             homeViewModel.selectedDay.value = calendar.time
@@ -164,18 +166,21 @@ class HomeFragment : Fragment() {
             }
         })
 
-//        scheduledAdapter = DoctorScheduleAdapter(object : OnSucheduleClickListener {
-//            override fun onItemClick(position: Int, doctorModel: DoctorForCompany,visitBtn:Boolean) {
-//                viewModel.selectedDoctor.value = doctorModel
-//                if (visitBtn){
-//                    findNavController().navigate(R.id.action_nav_home_to_visitFragment)
-//                }else{
-//                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
-//                }
-//            }
-//        }
-//        )
-//        binding.scheduleRecycler.adapter = scheduledAdapter
+        scheduledAdapter = DoctorScheduleAdapter(object : OnSucheduleClickListener {
+            override fun onItemClick(
+                position: Int,
+                doctorModel: DoctorForCompany,
+                visitBtn: Boolean
+            ) {
+                viewModel.selectedDoctor.value = doctorModel.doctorData
+                if (visitBtn) {
+                    findNavController().navigate(R.id.action_nav_home_to_visitFragment)
+                } else {
+                    findNavController().navigate(R.id.action_nav_home_to_doctorDetailsFragment)
+                }
+            }
+        })
+        binding.scheduleRecycler.adapter = scheduledAdapter
 
         binding.monthPickerButton.setOnClickListener {
             datePicker()

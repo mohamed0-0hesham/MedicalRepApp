@@ -28,7 +28,7 @@
                 android:background="@drawable/round_outline"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-
+                app:getImageByGlide="@{itemXml.doctorData.photoUrl}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -64,7 +64,7 @@
                     android:layout_below="@+id/nameView"
                     android:layout_alignStart="@+id/nameView"
                     android:paddingEnd="10dp"
-                    android:text="@{itemXml.clinics[0].area}"
+                    android:text="@{itemXml.doctorData.clinics[0].area}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="@+id/drText"
                     app:layout_constraintTop_toBottomOf="@+id/nameView"
@@ -78,7 +78,7 @@
                     android:layout_below="@+id/nameView"
                     android:layout_alignParentEnd="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    app:getDate="@{itemXml.doctorData.phoneNum}"
+                    app:getDate="@{itemXml.lastVisit.toString()}"
                     app:layout_constraintStart_toStartOf="@+id/area"
                     app:layout_constraintTop_toBottomOf="@+id/area"
                     tools:text="SUN-MON" />

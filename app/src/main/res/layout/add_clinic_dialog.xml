@@ -6,58 +6,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/doctorImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:contentDescription="@string/doctor_profile_picture"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/RoundedImageView"
-                app:srcCompat="@drawable/doctor_svgrepo_com" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/addDoctorName"
-                style="@style/customTextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/full_name">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/specialty"
-                style="@style/customExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/specialty">
-
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/specialtyAutoCompleteText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/PhoneNum"
@@ -75,7 +30,6 @@
                     android:inputType="phone"
                     android:singleLine="true"
                     tools:ignore="TouchTargetSizeCheck" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.chip.ChipGroup
@@ -108,26 +62,6 @@
                         android:inputType="text"
                         android:singleLine="true"
                         tools:text="alexandrie" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/gender"
-                    style="@style/customExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/gender"
-                    app:helperTextTextColor="@color/red">
-
-
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/autoCompleteGender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        tools:text="male" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -249,57 +183,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/choose_location_to_show_the_address"
                 />
-            <LinearLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/productsText"
-                    style="@style/customExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="2"
-                    android:hint="@string/products">
-
-
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        tools:text="alexandrie" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/LastVisitBtn"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:text="@string/last_visit"
-                    android:textColor="@color/black"
-                    app:cornerRadius="10dp"
-                    app:iconTint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/Products"
-                    app:strokeColor="#BFB8B8" />
-
-            </LinearLayout>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/ProductsGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/notes"
                 style="@style/customTextLayout"

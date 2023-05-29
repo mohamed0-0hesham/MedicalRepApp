@@ -130,7 +130,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center_horizontal"
-                        app:layout_constraintBottom_toTopOf="@+id/textView9"
+                        app:layout_constraintBottom_toTopOf="@+id/startTextView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +138,7 @@
                         app:srcCompat="@drawable/location_icon" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/startTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

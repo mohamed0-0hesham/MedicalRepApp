@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel() {
             override fun getScheduleDoctors(list: List<DoctorForCompany>) {
                 scheduleDoctorsList.value=list
             }
-        },futureDate.toString(),selectedDate.day,city)
+        },futureDate,selectedDate.day,city)
     }
 
     fun updateUser(userId:String,key:String,value:Any){
