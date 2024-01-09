@@ -6,7 +6,7 @@
     <data>
         <variable
             name="itemXml"
-            type="com.hesham.medicalRepApp.models.UserModel" />
+            type="com.hesham0_0.medicalRepApp.models.UserModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

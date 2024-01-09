@@ -7,7 +7,7 @@
 
         <variable
             name="itemXml"
-            type="com.hesham.medicalRepApp.models.DoctorModel" />
+            type="com.hesham0_0.medicalRepApp.models.DoctorModel" />
 
         <!--        <variable-->
         <!--            name="itemXml"-->

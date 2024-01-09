@@ -6,7 +6,7 @@
     <data>
         <variable
             name="itemXml"
-            type="com.hesham.medicalRepApp.models.DoctorClinic" />
+            type="com.hesham0_0.medicalRepApp.models.DoctorClinic" />
     </data>
 
     <androidx.cardview.widget.CardView

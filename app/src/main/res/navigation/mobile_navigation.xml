@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.hesham.medicalRepApp.ui.home.HomeFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -23,13 +23,13 @@
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.hesham.medicalRepApp.ui.profile.ProfileFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_doctors"
-        android:name="com.hesham.medicalRepApp.ui.doctors.DoctorsFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.doctors.DoctorsFragment"
         android:label="@string/doctors"
         tools:layout="@layout/fragment_doctors" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/addDoctorFragment"
-        android:name="com.hesham.medicalRepApp.ui.doctors.AddDoctorFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.doctors.AddDoctorFragment"
         android:label="Add Doctor"
         tools:layout="@layout/fragment_add_doctor" >
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/doctorDetailsFragment"
-        android:name="com.hesham.medicalRepApp.ui.doctors.DoctorDetailsFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.doctors.DoctorDetailsFragment"
         android:label="Doctor Profile" >
         <action
             android:id="@+id/action_doctorDetailsFragment_to_addDoctorFragment"
@@ -61,12 +61,12 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.hesham.medicalRepApp.ui.doctors.MapFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.doctors.MapFragment"
         android:label="Map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/visitFragment"
-        android:name="com.hesham.medicalRepApp.ui.doctors.VisitFragment"
+        android:name="com.hesham0_0.medicalRepApp.ui.doctors.VisitFragment"
         android:label="Visit"
         tools:layout="@layout/fragment_visit" />
 
