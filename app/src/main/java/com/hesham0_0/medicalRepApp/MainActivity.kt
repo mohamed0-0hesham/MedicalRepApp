@@ -13,8 +13,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.hesham.medicalRepApp.R
-import com.hesham.medicalRepApp.databinding.ActivityMainBinding
+import com.hesham0_0.medicalRepApp.R
+import com.hesham0_0.medicalRepApp.databinding.ActivityMainBinding
 import com.hesham0_0.medicalRepApp.methods.Utilities.Companion.checkPermissions
 import com.hesham0_0.medicalRepApp.methods.Utilities.Companion.updateNavHeader
 import com.hesham0_0.medicalRepApp.ui.login.LoginActivity

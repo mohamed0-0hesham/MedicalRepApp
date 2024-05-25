@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.hesham0_0.medicalRepApp.R
 import com.google.firebase.auth.*
 import com.hesham0_0.medicalRepApp.databinding.FragmentVerificationBinding
 

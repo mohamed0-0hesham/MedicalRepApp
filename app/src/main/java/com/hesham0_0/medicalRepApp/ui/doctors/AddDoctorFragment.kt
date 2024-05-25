@@ -138,6 +138,7 @@ class AddDoctorFragment : Fragment() {
     }
 
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             viewModel.addDoctorLocation.value = data?.extras?.get(EXTRA_DATA) as List<Double>
